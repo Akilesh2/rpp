@@ -4,7 +4,7 @@
 #include <cpu/rpp_cpu_common.hpp>
 #include <stdlib.h>
 #include <time.h>
-
+using namespace std;
 /************ brightness ************/
 
 template <typename T>
@@ -4553,7 +4553,104 @@ RppStatus snow_host_batch(T* srcPtr, RppiSize *batch_srcSize, RppiSize *batch_sr
             Rpp32f strength = batch_strength[batchCount];
 
             strength = strength/100;
-            int snow_mat[5][5] = {{0,50,75,50,0}, {40,80,120,80,40}, {75,120,255,120,75}, {40,80,120,80,40}, {0,50,75,50,0}};
+            // int snow_dim=0,start_val=0;
+            // if(batch_srcSize[batchCount].width<500)
+            //     {
+            //     snow_dim=5;
+            //     start_val=4;
+            //     }
+            //     else if(batch_srcSize[batchCount].width<1100)
+            //     {
+            //         snow_dim=7;
+            //         start_val=3;
+            //     }
+            //     else if(batch_srcSize[batchCount].width<2000)
+            //     {
+            //         snow_dim=11;
+            //         start_val=1;
+            //     } 
+            //     else
+            //     {
+            //         snow_dim=13;
+            //         start_val=0;
+            //     }
+                
+            //     int snow_values_5[5][5] = {{0,150,175,150,0}, {140,180,220,180,140}, {175,220,255,220,175}, {140,180,220,180,140}, {0,150,175,150,0}};
+            //     int snow_values_7[7][7] = {{0,150,175,200,175,150,0}, {140,180,220,250,220,180,140}, {175,220,240,250,240,220,175},{180,200,220,250,220,200,180},{175,220,240,250,240,220,175}, {140,180,220,250,220,180,140}, {0,150,175,200,175,150,0}};
+            //     int snow_values_11[11][11] = {{0,50,60,70,85,100,85,70,60,50,0}, 
+            //     {40,60,70,90,110,140,110,90,70,60,40},
+            //      {80,95,100,120,130,150,130,120,100,95,80},
+            //      {90,100,120,130,140,170,140,130,120,100,90},
+            //      {100,120,140,150,160,190,160,150,140,120,100},
+            //      {100,120,140,150,160,190,160,150,140,120,100},
+            //      {100,120,140,150,160,190,160,150,140,120,100},
+            //      {90,100,120,130,140,170,140,130,120,100,90},
+            //      {80,95,100,120,130,150,130,120,100,95,80},
+            //      {40,60,60,90,110,140,110,90,70,60,40},
+            //      {0,50,60,70,85,100,85,70,60,50,0}};
+            //     int snow_values_13[13][13] = {{0,12,25,50,75,100,120,100,75,50,25,12,0},
+            // {50,60,70,80,90,100,90,80,70,60,50}, 
+            //  {50,60,70,80,90,100,90,80,70,60,50},
+            //  {50,60,70,80,90,100,90,80,70,60,50},
+            //  {70,80,90,120,140,150,170,150,140,120,90,80,70},
+            //  {80,90,100,120,140,160,180,160,140,120,100,90,80},
+            //  {80,90,100,120,140,160,180,160,140,120,100,90,80},
+            //  {80,90,100,120,140,160,180,160,140,120,100,90,80},
+            //  {70,80,90,120,140,150,170,150,140,120,90,80,70},
+            //  {50,60,70,80,90,100,90,80,70,60,50},
+            //  {50,60,70,80,90,100,90,80,70,60,50},
+            //  {50,60,70,80,90,100,90,80,70,60,50},
+            //  {0,12,25,50,75,100,120,100,75,50,25,12,0}};
+            //     int snow_mat[snow_dim][snow_dim];
+            //     int x,y;
+            //     if(snow_dim==5)
+            //     {
+            //             for(x=0;x<snow_dim;x++)
+            //             {
+            //                 for(y=0;y<snow_dim;y++)
+            //                 {
+            //                     snow_mat[x][y]=snow_values_5[x][y];
+            //                 }
+            //             }
+                        
+            //     }
+            //     else if(snow_dim==7)
+            //     {
+            //             for(x=0;x<snow_dim;x++)
+            //             {
+            //                 for(y=0;y<snow_dim;y++)
+            //                 {
+            //                     snow_mat[x][y]=snow_values_7[x][y];
+            //                 }
+            //             }
+                       
+            //     }
+            //     else if(snow_dim==11)
+            //     {
+            //             for(x=0;x<snow_dim;x++)
+            //             {
+            //                 for(y=0;y<snow_dim;y++)
+            //                 {
+            //                     snow_mat[x][y]=snow_values_11[x][y];
+            //                 }
+            //             }
+                        
+            //     }
+            //     else
+            //     {
+            //             for(x=0;x<snow_dim;x++)
+            //             {
+            //                 for(y=0;y<snow_dim;y++)
+            //                 {
+            //                     snow_mat[x][y]=snow_values_13[x][y];
+            //                 }
+            //             }
+                        
+            //     }
+
+
+
+            //int snow_mat[5][5] = {{0,50,75,50,0}, {40,80,120,80,40}, {75,120,255,120,75}, {40,80,120,80,40}, {0,50,75,50,0}};
 
             Rpp32u snowDrops = (Rpp32u)(strength * batch_srcSize[batchCount].width * batch_srcSize[batchCount].height * channel );
 
@@ -4576,24 +4673,151 @@ RppStatus snow_host_batch(T* srcPtr, RppiSize *batch_srcSize, RppiSize *batch_sr
             T *srcPtrTemp, *dstPtrTemp;
             srcPtrTemp = srcPtrImage;
             dstPtrTemp = dstPtrImage;
-
-            for(int i = 0 ; i < snowDrops ; i++)
+            int snow_dim=0;
+            int start_val =0;
+            int a1=0,a2=0,a3=0,a4=0;
+            for( int i = 0 ; i < snowDrops ; i++)
             {
                 Rpp32u row = rand() % batch_srcSize[batchCount].height;
                 Rpp32u column = rand() % batch_srcSize[batchCount].width;
                 Rpp32f pixel;
+                int num=0;
+                while(num!=5 && num!=7 && num!=11 && num !=13)
+                {
+                    num= rand()% 13+1;
+                    if(num==13 || num==11)
+                    {
+                        if(a1<5)
+                        {
+                            num=1;
+                        }
+                        else
+                        {
+                            a1/=5;
+                        }
+                                  
+
+                    }
+                }
+               
+                if(num==5)
+                {
+                    a1++;
+                snow_dim=5;
+                start_val=4;
+                }
+                else if(num==7)
+                {
+                    snow_dim=7;
+                    start_val=3;
+                    a2++;
+                }
+                else if(num==11)
+                {
+                    snow_dim=11;
+                    start_val=1;
+                    a3++;
+                } 
+                else
+                {
+                    snow_dim=13;
+                    start_val=0;
+                    a4++;
+                }
+                
+                int snow_values_5[5][5] = {{0,150,175,150,0}, {140,180,220,180,140}, {175,220,255,220,175}, {140,180,220,180,140}, {0,150,175,150,0}};
+                int snow_values_7[7][7] = {{0,150,175,200,175,150,0}, {140,180,220,250,220,180,140}, {175,220,240,250,240,220,175},{180,200,220,250,220,200,180},{175,220,240,250,240,220,175}, {140,180,220,250,220,180,140}, {0,150,175,200,175,150,0}};
+                int snow_values_11[11][11] = {{0,50,60,70,85,100,85,70,60,50,0}, 
+                {40,60,70,90,110,140,110,90,70,60,40},
+                 {80,95,100,120,130,150,130,120,100,95,80},
+                 {90,100,120,130,140,170,140,130,120,100,90},
+                 {100,120,140,150,160,190,160,150,140,120,100},
+                 {100,120,140,150,160,190,160,150,140,120,100},
+                 {100,120,140,150,160,190,160,150,140,120,100},
+                 {90,100,120,130,140,170,140,130,120,100,90},
+                 {80,95,100,120,130,150,130,120,100,95,80},
+                 {40,60,60,90,110,140,110,90,70,60,40},
+                 {0,50,60,70,85,100,85,70,60,50,0}};
+                int snow_values_13[13][13] = {{0,12,25,50,75,100,120,100,75,50,25,12,0},
+            {50,60,70,80,90,100,90,80,70,60,50}, 
+             {50,60,70,80,90,100,90,80,70,60,50},
+             {50,60,70,80,90,100,90,80,70,60,50},
+             {70,80,90,120,140,150,170,150,140,120,90,80,70},
+             {80,90,100,120,140,160,180,160,140,120,100,90,80},
+             {80,90,100,120,140,160,180,160,140,120,100,90,80},
+             {80,90,100,120,140,160,180,160,140,120,100,90,80},
+             {70,80,90,120,140,150,170,150,140,120,90,80,70},
+             {50,60,70,80,90,100,90,80,70,60,50},
+             {50,60,70,80,90,100,90,80,70,60,50},
+             {50,60,70,80,90,100,90,80,70,60,50},
+             {0,12,25,50,75,100,120,100,75,50,25,12,0}};
+                int snow_mat[snow_dim][snow_dim];
+                int x,y;
+                if(snow_dim==5)
+                {
+                        for(x=0;x<snow_dim;x++)
+                        {
+                            for(y=0;y<snow_dim;y++)
+                            {
+                                snow_mat[x][y]=snow_values_5[x][y];
+                            }
+                        }
+                }
+                else if(snow_dim==7)
+                {
+                        for(x=0;x<snow_dim;x++)
+                        {
+                            for(y=0;y<snow_dim;y++)
+                            {
+                                snow_mat[x][y]=snow_values_7[x][y];
+                            }
+                        }
+                }
+                else if(snow_dim==11)
+                {
+                        for(x=0;x<snow_dim;x++)
+                        {
+                            for(y=0;y<snow_dim;y++)
+                            {
+                                snow_mat[x][y]=snow_values_11[x][y];
+                            }
+                        }
+                }
+                else
+                {
+                        for(x=0;x<snow_dim;x++)
+                        {
+                            for(y=0;y<snow_dim;y++)
+                            {
+                                snow_mat[x][y]=snow_values_13[x][y];
+                            }
+                        }
+                }
+                //cout<<a1<<" "<<a2<<" "<<a3<<" "<<a4<<endl;
+                // int snow_mat[snow_dim][snow_dim];
+                // int a=0,b=0,x=0,y=0;
+                
+                // for(a=start_val,x=0;a<(12-start_val);a++,x++)
+                // {
+                //     for(b=start_val,y=0;b<(12-start_val);b++,y++)
+                //     {
+                //         snow_mat[x][y]=snow_values[a][b];
+                //     }
+                // }
+                
+                    
                 for(int k = 0;k < channel;k++)
                 {
                     dstPtrTemp[(channel * row * batch_srcSizeMax[batchCount].width) + (column * channel) + k] = RPPPIXELCHECK(dstPtrTemp[(channel * row * batch_srcSizeMax[batchCount].width) + (column * channel) + k] + snow_mat[0][0]) ;
                 }
-                for(int j = 0;j < 5;j++)
+                for(int j = 0;j < snow_dim;j++)
                 {
-                    if(row + 5 < batch_srcSize[batchCount].height && row + 5 > 0 )
+                    if(row + snow_dim < batch_srcSize[batchCount].height && row + snow_dim > 0 )
                     for(int k = 0;k < channel;k++)
                     {
-                        for(int m = 0;m < 5;m++)
+                        for(int m = 0;m < snow_dim;m++)
                         {
-                            if (column + 5 < batch_srcSize[batchCount].width && column + 5 > 0)
+                            if (column + snow_dim < batch_srcSize[batchCount].width && column + snow_dim > 0)
                             {
                                 dstPtrTemp[(channel * row * batch_srcSizeMax[batchCount].width) + (column * channel) + k + (channel * batch_srcSizeMax[batchCount].width * j) + (channel * m)] = RPPPIXELCHECK( dstPtrTemp[(channel * row * batch_srcSizeMax[batchCount].width) + (column * channel) + k + (channel * batch_srcSizeMax[batchCount].width * j) + (channel * m)] + snow_mat[j][m]);
                             }
