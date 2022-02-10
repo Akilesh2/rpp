@@ -4650,7 +4650,7 @@ RppStatus snow_host_batch(T* srcPtr, RppiSize *batch_srcSize, RppiSize *batch_sr
 
 
 
-            // int snow_mat[5][5] = {{0,50,75,50,0}, {40,80,120,80,40}, {75,120,255,120,75}, {40,80,120,80,40}, {0,50,75,50,0}};
+           
 
             Rpp32u snowDrops = (Rpp32u)(strength * batch_srcSize[batchCount].width * batch_srcSize[batchCount].height * channel );
 
@@ -4673,9 +4673,7 @@ RppStatus snow_host_batch(T* srcPtr, RppiSize *batch_srcSize, RppiSize *batch_sr
             T *srcPtrTemp, *dstPtrTemp;
             srcPtrTemp = srcPtrImage;
             dstPtrTemp = dstPtrImage;
-            // int snow_dim=0;
-            // int start_val =0;
-            // int a1=0,a2=0,a3=0,a4=0;
+            
             for( int i = 0 ; i < snowDrops ; i++)
             {
                 Rpp32u row = rand() % batch_srcSize[batchCount].height;
