@@ -497,6 +497,10 @@ int main(int argc, char **argv)
         strcat(temp, imageNames[count]);
 
         image = imread(temp, 1);
+        if(image.rows==0)
+        {
+            throw std::runtime_error("OpenCV ERROR Image not read");
+        }
 
         srcSize[count].height = image.rows;
         srcSize[count].width = image.cols;

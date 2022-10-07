@@ -384,6 +384,10 @@ int main(int argc, char **argv)
         strcat(temp, imageNames[count]);
 
         image = imread(temp, 0);
+        if(image.rows==0)
+        {
+            throw std::runtime_error("OpenCV ERROR Image not read");
+        }
 
         roiTensorPtrSrc[count].xywhROI.xy.x = 0;
         roiTensorPtrSrc[count].xywhROI.xy.y = 0;
