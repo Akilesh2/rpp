@@ -10,6 +10,7 @@
 #include <omp.h>
 #include <half/half.hpp>
 #include <fstream>
+#include <vector>
 
 // Include this header file to use functions from libsndfile
 #include <sndfile.h>
@@ -165,55 +166,101 @@ int main(int argc, char **argv)
     unsigned long long iBufferSize = 0;
     unsigned long long oBufferSize = 0;
     static int noOfAudioFiles = 0;
-
-    // String ops on function name
-    char src1[1000];
-    strcpy(src1, src);
-    strcat(src1, "/");
+    int batchSize = 3;
 
     char func[1000];
     strcpy(func, funcName);
 
     // Get number of audio files
     struct dirent *de;
+    struct dirent *de_sub;
     DIR *dr = opendir(src);
+    DIR *dr1 = opendir(src);
+
+    std::vector<std::string> AudioNameVec;
+
+
+    char subname[1000]={};
+    char temp_img[1000] ={};
     while ((de = readdir(dr)) != NULL)
     {
         if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
             continue;
-        noOfAudioFiles += 1;
+        if (de->d_type == DT_DIR)
+        {
+           strcpy(subname, src);
+           strcat(subname,"/");
+           strcat(subname, de->d_name);
+
+           DIR *drsub = opendir(subname);
+           while((de_sub = readdir(drsub))!= NULL)
+           {
+                if (strcmp(de_sub->d_name, ".") == 0 || strcmp(de_sub->d_name, "..") == 0)
+                    continue;
+
+                strcpy(temp_img, subname);
+                strcat(temp_img,"/");
+                strcat(temp_img, de_sub->d_name);
+
+                noOfAudioFiles += 1;
+                AudioNameVec.push_back(temp_img);
+           }
+           closedir(drsub);
+        }
+        else
+        {
+            strcpy(temp_img, src);
+            strcat(temp_img,"/");
+            strcat(temp_img, de->d_name);
+            noOfAudioFiles += 1;
+            AudioNameVec.push_back(temp_img);
+
+        }
     }
     closedir(dr);
+    std::string last_img_name = AudioNameVec[noOfAudioFiles - 1];
+    int remImages = 0;
+
+    //If total number of images is not a multiple of batchSize
+    if((noOfAudioFiles % batchSize)!= 0)
+    {
+        remImages = batchSize - noOfAudioFiles % batchSize;
+    }
+
+    //Replicate last image for remImages
+    for(int i = 0; i < remImages; i++)
+    {
+        AudioNameVec.push_back(last_img_name);
+    }
+
+    std::cerr<<"AudioNameVec.size()  "<<AudioNameVec.size()<<std::endl;
 
     // Initialize the AudioPatch for source
-    Rpp32s *inputAudioSize = (Rpp32s *) calloc(noOfAudioFiles, sizeof(Rpp32s));
-    Rpp32s *srcLengthTensor = (Rpp32s *) calloc(noOfAudioFiles, sizeof(Rpp32s));
-    Rpp32s *channelsTensor = (Rpp32s *) calloc(noOfAudioFiles, sizeof(Rpp32s));
+    Rpp32s *inputAudioSize = (Rpp32s *) calloc(batchSize, sizeof(Rpp32s));
+    Rpp32s *srcLengthTensor = (Rpp32s *) calloc(batchSize, sizeof(Rpp32s));
+    Rpp32s *channelsTensor = (Rpp32s *) calloc(batchSize, sizeof(Rpp32s));
 
-    RpptImagePatch *srcDims = (RpptImagePatch *) calloc(noOfAudioFiles, sizeof(RpptImagePatch));
-    RpptImagePatch *dstDims = (RpptImagePatch *) calloc(noOfAudioFiles, sizeof(RpptImagePatch));
+    RpptImagePatch *srcDims = (RpptImagePatch *) calloc(batchSize, sizeof(RpptImagePatch));
+    RpptImagePatch *dstDims = (RpptImagePatch *) calloc(batchSize, sizeof(RpptImagePatch));
 
     // Set maxLength
-    char audioNames[noOfAudioFiles][1000];
+    char audioNames[batchSize][1000];
 
     // Set Height as 1 for src, dst
     maxSrcHeight = 1;
     maxDstHeight = 1;
-
+ 
+ 
     dr = opendir(src);
-    while ((de = readdir(dr)) != NULL)
+    for (int j=0; j< AudioNameVec.size();j++)
     {
-        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
-            continue;
-        strcpy(audioNames[count], de->d_name);
-        char temp[1000];
-        strcpy(temp, src1);
-        strcat(temp, audioNames[count]);
 
-        SNDFILE	*infile;
+        char temp[1000];
+        strcpy(temp, AudioNameVec[j].c_str());
+        SNDFILE	*infile= NULL;
         SF_INFO sfinfo;
         int	readcount;
-
+        
         //The SF_INFO struct must be initialized before using it
         memset (&sfinfo, 0, sizeof (sfinfo));
         if (!(infile = sf_open (temp, SFM_READ, &sfinfo)) || sfinfo.channels > MAX_CHANNELS)
@@ -221,25 +268,26 @@ int main(int argc, char **argv)
             sf_close (infile);
             continue;
         }
+        inputAudioSize[j] = sfinfo.frames * sfinfo.channels;
+        srcLengthTensor[j] = sfinfo.frames;
+        channelsTensor[j] = sfinfo.channels;
 
-        inputAudioSize[count] = sfinfo.frames * sfinfo.channels;
-        srcLengthTensor[count] = sfinfo.frames;
-        channelsTensor[count] = sfinfo.channels;
+        srcDims[j].width = sfinfo.frames;
+        dstDims[j].width = sfinfo.frames;
+        srcDims[j].height = 1;
+        dstDims[j].height = 1;
 
-        srcDims[count].width = sfinfo.frames;
-        dstDims[count].width = sfinfo.frames;
-        srcDims[count].height = 1;
-        dstDims[count].height = 1;
-
-        maxSrcWidth = std::max(maxSrcWidth, srcLengthTensor[count]);
-        maxDstWidth = std::max(maxDstWidth, srcLengthTensor[count]);
-        maxChannels = std::max(maxChannels, channelsTensor[count]);
+        maxSrcWidth = std::max(maxSrcWidth, srcLengthTensor[j]);
+        maxDstWidth = std::max(maxDstWidth, srcLengthTensor[j]);
+        maxChannels = std::max(maxChannels, channelsTensor[j]);
 
         // Close input
-        sf_close (infile);
-        count++;
+        // sf_close (infile);
+
+        // count++;
     }
     closedir(dr);
+
 
     // Set numDims, offset, n/c/h/w values for src/dst
     srcDescPtr->numDims = 4;
@@ -248,8 +296,8 @@ int main(int argc, char **argv)
     srcDescPtr->offsetInBytes = 0;
     dstDescPtr->offsetInBytes = 0;
 
-    srcDescPtr->n = noOfAudioFiles;
-    dstDescPtr->n = noOfAudioFiles;
+    srcDescPtr->n = batchSize;
+    dstDescPtr->n = batchSize;
 
     srcDescPtr->h = maxSrcHeight;
     dstDescPtr->h = maxDstHeight;
@@ -277,6 +325,7 @@ int main(int argc, char **argv)
     dstDescPtr->strides.hStride = dstDescPtr->c * dstDescPtr->w;
     dstDescPtr->strides.wStride = dstDescPtr->c;
     dstDescPtr->strides.cStride = 1;
+    
 
     // Set buffer sizes for src/dst
     iBufferSize = (unsigned long long)srcDescPtr->h * (unsigned long long)srcDescPtr->w * (unsigned long long)srcDescPtr->c * (unsigned long long)srcDescPtr->n;
@@ -284,57 +333,51 @@ int main(int argc, char **argv)
 
     // Initialize host buffers for input & output
     Rpp32f *inputf32 = (Rpp32f *)calloc(iBufferSize, sizeof(Rpp32f));
+    Rpp32f *inputf32_second = (Rpp32f *)calloc(iBufferSize, sizeof(Rpp32f));
     Rpp32f *outputf32 = (Rpp32f *)calloc(oBufferSize, sizeof(Rpp32f));
-
-    i = 0;
-    dr = opendir(src);
-    while ((de = readdir(dr)) != NULL)
-    {
-        Rpp32f *input_temp_f32;
-        input_temp_f32 = inputf32 + (i * srcDescPtr->strides.nStride);
-
-        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
-            continue;
-        strcpy(audioNames[count], de->d_name);
-        char temp[1000];
-        strcpy(temp, src1);
-        strcat(temp, audioNames[count]);
-
-        SNDFILE	*infile;
-        SF_INFO sfinfo;
-        int	readcount;
-
-        // The SF_INFO struct must be initialized before using it
-        memset (&sfinfo, 0, sizeof (sfinfo));
-        if (!(infile = sf_open (temp, SFM_READ, &sfinfo)) || sfinfo.channels > MAX_CHANNELS)
-        {
-            sf_close (infile);
-            continue;
-        }
-
-        int bufferLength = sfinfo.frames * sfinfo.channels;
-        if(ip_bitDepth == 2)
-        {
-            readcount = (int) sf_read_float (infile, input_temp_f32, bufferLength);
-            if(readcount != bufferLength)
-                std::cerr<<"F32 Unable to read audio file completely"<<std::endl;
-        }
-        i++;
-
-        // Close input
-        sf_close (infile);
-    }
-    closedir(dr);
 
     // Run case-wise RPP API and measure time
     rppHandle_t handle;
-    rppCreateWithBatchSize(&handle, noOfAudioFiles);
+    rppCreateWithBatchSize(&handle, batchSize);
     printf("\nRunning %s 100 times (each time with a batch size of %d audio files) and computing mean statistics...", func, noOfAudioFiles);
 
     double max_time_used = 0, min_time_used = 500, avg_time_used = 0;
     string test_case_name;
-    for (int perfRunCount = 0; perfRunCount < 100; perfRunCount++)
+    int numRuns =1;
+    // std::cerr<<"srcDescPtr->strides.nStride  "<<srcDescPtr->strides.nStride<<"\n";
+    for (int perfRunCount = 0; perfRunCount < numRuns; perfRunCount++)
     {
+    for(int t = 0; t < (int)AudioNameVec.size() / batchSize; t++)
+    {
+        for(int i = 0; i < batchSize ; i++)
+        {
+            int idx = t * batchSize + i;
+            Rpp32f *input_temp_f32;
+            input_temp_f32 = inputf32 + (i * srcDescPtr->strides.nStride);
+            SNDFILE	*infile;
+            SF_INFO sfinfo;
+            int	readcount;
+            char temp[1000];
+            strcpy(temp, AudioNameVec[idx].c_str());
+
+            // The SF_INFO struct must be initialized before using it
+            memset (&sfinfo, 0, sizeof (sfinfo));
+            if (!(infile = sf_open (temp, SFM_READ, &sfinfo)) || sfinfo.channels > MAX_CHANNELS)
+            {
+                sf_close (infile);
+                continue;
+            }
+
+            int bufferLength = sfinfo.frames * sfinfo.channels;
+            if(ip_bitDepth == 2)
+            {
+                readcount = (int) sf_read_float (infile, input_temp_f32, bufferLength);
+                if(readcount != bufferLength)
+                    std::cerr<<"F32 Unable to read audio file completely"<<std::endl;
+            }
+            sf_close(infile);
+        }
+
         clock_t start, end;
         double start_omp, end_omp;
         double cpu_time_used, omp_time_used;
@@ -398,7 +441,25 @@ int main(int argc, char **argv)
                 start = clock();
                 if (ip_bitDepth == 2)
                 {
+                    if (1) {
+                    std::cerr<<"input ";
+                    float *temp1 = ((float *)calloc(100, sizeof(float)));
+                    for (int i = 0; i < 100; i++) {
+                        
+                        std::cout << inputf32[i] <<" ";
+                    }
+                    std::cerr<<"\n";
+                    }
                     rppt_pre_emphasis_filter_host(inputf32, srcDescPtr, outputf32, dstDescPtr, inputAudioSize, coeff, borderType);
+                    if (1) {
+                    std::cerr<<"output ";
+                    float *temp1 = ((float *)calloc(100, sizeof(float)));
+                    for (int i = 0; i < 100; i++) {
+
+                        std::cout << outputf32[i] <<" ";
+                }
+                std::cerr<<"\n";
+                }
                 }
                 else
                     missingFuncFlag = 1;
@@ -748,8 +809,10 @@ int main(int argc, char **argv)
             min_time_used = cpu_time_used;
         avg_time_used += cpu_time_used;
     }
-
-    avg_time_used /= 100;
+}
+    int factor = (int)AudioNameVec.size() / batchSize;
+    avg_time_used /= (factor * numRuns);
+    // avg_time_used /= 100;
 
     // Display measured times
     cout << fixed << "\nmax,min,avg = " << max_time_used << "," << min_time_used << "," << avg_time_used << endl;
@@ -757,11 +820,11 @@ int main(int argc, char **argv)
     rppDestroyHost(handle);
 
     // Free memory
-    free(inputAudioSize);
-    free(srcLengthTensor);
-    free(channelsTensor);
-    free(srcDims);
-    free(dstDims);
+    // free(inputAudioSize);
+    // free(srcLengthTensor);
+    // free(channelsTensor);
+    // free(srcDims);
+    // free(dstDims);
     free(inputf32);
     free(outputf32);
 
