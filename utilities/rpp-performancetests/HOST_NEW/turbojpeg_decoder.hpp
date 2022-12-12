@@ -135,7 +135,7 @@ void decode_info(unsigned char* input_buffer, size_t input_size, int* width, int
     {
         // ignore "Could not determine Subsampling type error"
         if ( STR(tjGetErrorStr2(m_jpegDecompressor)).find("Could not determine subsampling type for JPEG image") == std::string::npos) {
-            continue;
+            // continue;
         }
     }
     // return Status::OK;

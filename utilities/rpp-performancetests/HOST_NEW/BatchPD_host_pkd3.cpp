@@ -27,9 +27,8 @@ int main(int argc, char **argv)
 {
     const int MIN_ARG_COUNT = 7;
     static int image_count, image_failed;
-    clock_t start_tot, end_tot;
-    start_tot = clock();
-
+    double start_tot, end_tot;
+    start_tot = omp_get_wtime();
     if (argc < MIN_ARG_COUNT)
     {
         printf("\nImproper Usage! Needs all arguments!\n");
@@ -418,7 +417,7 @@ int main(int argc, char **argv)
     char func[1000];
     strcpy(func, funcName);
     strcat(func, funcType);
-
+    
     int missingFuncFlag = 0;
 
     int i = 0, j = 0;
@@ -430,9 +429,17 @@ int main(int argc, char **argv)
     static int noOfImages = 0;
 
     // Mat image, image_second;
-    int batchSize = 256;
+    int batchSize1 = 256;
+    int batchSize=64;
+    
     Mat image;
-
+    
+    
+    //*******************tensor*******************
+  
+    
+    //*********************************end tensor********************
+    
     char src1[1000];
     strcpy(src1, src);
     strcat(src1, "/");
@@ -532,13 +539,14 @@ int main(int argc, char **argv)
     Rpp8s *inputi8_second = (Rpp8s *)calloc(ioBufferSize, sizeof(Rpp8s));
     Rpp8s *outputi8 = (Rpp8s *)calloc(ioBufferSize, sizeof(Rpp8s));
 
-
+    std::cerr<<"checking ";
     RppiSize maxSize, maxDstSize;
     maxSize.height = maxHeight;
     maxSize.width = maxWidth;
     maxDstSize.height = maxDstHeight;
     maxDstSize.width = maxDstWidth;
-
+    std::cerr<<"checking1 ";
+    
     count = 0;
     i = 0;
     unsigned long long imageDimMax = (unsigned long long)maxHeight * (unsigned long long)maxWidth * (unsigned long long)ip_channel;
@@ -549,17 +557,57 @@ int main(int argc, char **argv)
     clock_t start, end;
     double start_omp, end_omp;
     double max_time_used = 0, min_time_used = 500, avg_time_used = 0;
-
+    std::cerr<<"checking3 ";
+    
     string test_case_name;
     int numRuns = 1;
+    
+    RpptDesc srcDesc, dstDesc;
+    RpptDescPtr srcDescPtr, dstDescPtr;
+    srcDescPtr = &srcDesc;
+    dstDescPtr = &dstDesc;
+    srcDescPtr->layout = RpptLayout::NHWC;
+    dstDescPtr->layout = RpptLayout::NHWC;
+    srcDescPtr->dataType = RpptDataType::U8;
+    dstDescPtr->dataType = RpptDataType::U8;
+    srcDescPtr->numDims = 4;
+    dstDescPtr->numDims = 4;
 
+    srcDescPtr->offsetInBytes = 0;
+    dstDescPtr->offsetInBytes = 0;
+
+    srcDescPtr->n = batchSize;
+    srcDescPtr->h = maxHeight;
+    srcDescPtr->w = maxWidth;
+    srcDescPtr->c = ip_channel;
+
+    dstDescPtr->n = batchSize;
+    dstDescPtr->h = maxDstHeight;
+    dstDescPtr->w = maxDstWidth;
+    dstDescPtr->c = ip_channel;
+    
+    RpptRoiType roiTypeSrc, roiTypeDst;
+    roiTypeSrc = RpptRoiType::XYWH;
+    roiTypeDst = RpptRoiType::XYWH;
+    
+    
+    
     printf("\nRunning %s 100 times (each time with a batch size of %d images) and computing mean statistics...", func, batchSize);
-
+    // std::cerr<<"Running";
+    // int temp1 = batchSize;
+    // int batchSize1=batchSize;
+    // batchSize=64;
+    static int count1 ; 
     for (int perfRunCount = 0; perfRunCount < numRuns; perfRunCount++)
     {
         initialize();
-        for(int t = 0; t < (int)imageNamesVec.size() / batchSize; t++)
+        
+        for(int t = 0; t < ((int)imageNamesVec.size() / batchSize1  ) ; t++)
         {
+            for(int kk=0;kk<batchSize1/batchSize;kk++)
+            {
+            count1++;
+            // continue;
             // std::cout<<"Iteration: "<<t<<std::endl;
             //Read the input images
             // std::cerr<<"image_count "<<image_count<<" ";
@@ -570,17 +618,21 @@ int main(int argc, char **argv)
 
             Rpp8u *offsetted_input_second;
             offsetted_input_second = input_second;
-
+            RpptROI *roiTensorPtrSrc = (RpptROI *) calloc(batchSize, sizeof(RpptROI));
+                RpptROI *roiTensorPtrDst = (RpptROI *) calloc(batchSize, sizeof(RpptROI));
+                RpptImagePatch *srcImgSizes = (RpptImagePatch *) calloc(batchSize, sizeof(RpptImagePatch));
+                RpptImagePatch *dstImgSizes = (RpptImagePatch *) calloc(batchSize, sizeof(RpptImagePatch));
             for(int i = 0; i < batchSize ; i++)
             {
+                // std::cerr<<"\niteration "<<i;
                 Rpp8u *input_temp, *input_temp_second, *input_temp_c;
                 input_temp = offsetted_input + (i * imageDimMax);
                 input_temp_c = offsetted_input_c + (i * imageDimMax);
                 input_temp_second = offsetted_input_second + (i * imageDimMax);
-                int idx = t * batchSize + i;
+                int idx = (t * batchSize1)+((kk*batchSize) + i);
 
                 // image = imread(imageNamesVec[idx].c_str(), 1);
-                // std::cerr<<"\n Image name:: "<<imageNamesVec[idx].c_str();
+                std::cerr<<"\n Image name:: "<<imageNamesVec[idx].c_str();
                 size_t file_size = read_data(imageNamesVec[idx].c_str(), input_temp_c);
                 if(file_size == 0)
                 {
@@ -602,6 +654,26 @@ int main(int argc, char **argv)
                 srcSize[i].height = scaledh;
                 dstSize[i].width = scaledw;
                 dstSize[i].height = scaledh;
+                
+                //**************tensor *************
+                
+                
+                
+                roiTensorPtrSrc[i].xywhROI.xy.x = 0;
+                roiTensorPtrSrc[i].xywhROI.xy.y = 0;
+                roiTensorPtrSrc[i].xywhROI.roiWidth = scaledw;
+                roiTensorPtrSrc[i].xywhROI.roiHeight = scaledh;
+
+                roiTensorPtrDst[i].xywhROI.xy.x = 0;
+                roiTensorPtrDst[i].xywhROI.xy.y = 0;
+                roiTensorPtrDst[i].xywhROI.roiWidth = scaledw;
+                roiTensorPtrDst[i].xywhROI.roiHeight = scaledh;
+
+                srcImgSizes[i].width = roiTensorPtrSrc[count].xywhROI.roiWidth;
+                srcImgSizes[i].height = roiTensorPtrSrc[count].xywhROI.roiHeight;
+                dstImgSizes[i].width = roiTensorPtrDst[count].xywhROI.roiWidth;
+                dstImgSizes[i].height = roiTensorPtrDst[count].xywhROI.roiHeight;
+                //***************end tensor*************
 
                 // Rpp8u *ip_image = image.data;
                 // Rpp32u elementsInRow = srcSize[i].width * ip_channel;
@@ -1336,12 +1408,32 @@ int main(int argc, char **argv)
 
                     maxDstSize.height = maxDstHeight;
                     maxDstSize.width = maxDstWidth;
+                    
+                    // Rpp32f mean[images];
+                    // Rpp32f stdDev[images];
+                    // Rpp32u mirror[images];
+                    for (i = 0; i < images; i++)
+                    {
+                        dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = roiTensorPtrSrc[i].xywhROI.roiWidth / 1.1;
+                        dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = roiTensorPtrSrc[i].xywhROI.roiHeight / 3;
+                    }
 
+                    // Uncomment to run test case with an xywhROI override
+                    for (i = 0; i < images; i++)
+                    {
+                        roiTensorPtrSrc[i].xywhROI.xy.x = 0;
+                        roiTensorPtrSrc[i].xywhROI.xy.y = 0;
+                        roiTensorPtrSrc[i].xywhROI.roiWidth = 224;
+                        roiTensorPtrSrc[i].xywhROI.roiHeight = 224;
+                    }
+                    
+                    
                     start_omp = omp_get_wtime();
                     start = clock();
                     if (ip_bitDepth == 0)
                     {
-                        rppi_resize_u8_pkd3_batchPD_host(input, srcSize, maxSize, input_second, dstSize, maxDstSize, outputFormatToggle, batchSize, handle);
+                        // rppi_resize_u8_pkd3_batchPD_host(input, srcSize, maxSize, input_second, dstSize, maxDstSize, outputFormatToggle, batchSize, handle);
+                        rppt_resize_host(input, srcDescPtr, input_second, dstDescPtr, dstImgSizes,  RpptInterpolationType::TRIANGULAR, roiTensorPtrSrc, roiTypeSrc, handle);
                         rppi_crop_mirror_normalize_u8_pkd3_batchPD_host(input_second, srcSize, maxSize, output, dstSize, maxDstSize, crop_pos_x, crop_pos_y, mean, stdDev, mirrorFlag, outputFormatToggle, batchSize, handle);
 
                     }
@@ -3435,14 +3527,16 @@ int main(int argc, char **argv)
                 min_time_used = omp_time_used;
             avg_time_used += omp_time_used;
         }
+    }
         release();
     }
 
     int factor = (int)imageNamesVec.size() / batchSize;
     avg_time_used /= (factor * numRuns);
     cout << fixed << "\nmax,min,avg = " << max_time_used << "," << min_time_used << "," << avg_time_used << endl;
-    end_tot=clock();
+    end_tot = omp_get_wtime();
     std::cerr<<"\n\ntotal run time "<< end_tot-start_tot<<" /ntot image  "<<image_count<<"/n image failed "<<image_failed;
+    std::cerr<<"\n\ncount "<<count1;
     // rppDestroyHost(handle);
 
     // free(srcSize);

@@ -14,6 +14,8 @@
 #include <fstream>
 #include <algorithm>
 #include <iterator>
+#include <omp.h>
+
 #include <hip/hip_runtime_api.h>
 #include "turbojpeg_decoder.hpp"
 
@@ -653,10 +655,59 @@ int main(int argc, char **argv)
     rppCreateWithStreamAndBatchSize(&handle, stream, batchSize);
 
     clock_t start, end;
+    double start_omp, end_omp;
     double max_time_used = 0, min_time_used = 500, avg_time_used = 0;
 
     string test_case_name;
     int numRuns = 1;
+    
+    RpptDesc srcDesc, dstDesc;
+    RpptDescPtr srcDescPtr, dstDescPtr;
+    srcDescPtr = &srcDesc;
+    dstDescPtr = &dstDesc;
+    srcDescPtr->layout = RpptLayout::NHWC;
+    dstDescPtr->layout = RpptLayout::NHWC;
+    srcDescPtr->dataType = RpptDataType::U8;
+    dstDescPtr->dataType = RpptDataType::U8;
+    srcDescPtr->numDims = 4;
+    dstDescPtr->numDims = 4;
+
+    srcDescPtr->offsetInBytes = 0;
+    dstDescPtr->offsetInBytes = 0;
+
+    srcDescPtr->n = batchSize;
+    srcDescPtr->h = maxHeight;
+    srcDescPtr->w = maxWidth;
+    srcDescPtr->c = ip_channel;
+
+    dstDescPtr->n = batchSize;
+    dstDescPtr->h = maxDstHeight;
+    dstDescPtr->w = maxDstWidth;
+    dstDescPtr->c = ip_channel;
+    
+    RpptROI *roiTensorPtrSrc = (RpptROI *) calloc(noOfImages, sizeof(RpptROI));
+    RpptROI *roiTensorPtrDst = (RpptROI *) calloc(noOfImages, sizeof(RpptROI));
+
+    RpptROI *d_roiTensorPtrSrc, *d_roiTensorPtrDst;
+    hipMalloc(&d_roiTensorPtrSrc, noOfImages * sizeof(RpptROI));
+    hipMalloc(&d_roiTensorPtrDst, noOfImages * sizeof(RpptROI));
+
+    // Initialize the ImagePatch for source and destination
+
+    RpptImagePatch *srcImgSizes = (RpptImagePatch *) calloc(noOfImages, sizeof(RpptImagePatch));
+    RpptImagePatch *dstImgSizes = (RpptImagePatch *) calloc(noOfImages, sizeof(RpptImagePatch));
+    
+    RpptRoiType roiTypeSrc, roiTypeDst;
+    roiTypeSrc = RpptRoiType::XYWH;
+    roiTypeDst = RpptRoiType::XYWH;
+    
+    
+    RpptImagePatch *d_srcImgSizes, *d_dstImgSizes;
+    hipMalloc(&d_srcImgSizes, noOfImages * sizeof(RpptImagePatch));
+    hipMalloc(&d_dstImgSizes, noOfImages * sizeof(RpptImagePatch));
+    
+    
+    
     printf("\nRunning %s %d times (each time with a batch size of %d images) and computing mean statistics...", func, numRuns, batchSize);
     std::cout<<"iterations: "<<(int)imageNamesVec.size() / batchSize<<std::endl;
 
@@ -720,7 +771,7 @@ int main(int argc, char **argv)
                 hipMemcpy(d_input_second, input, ioBufferSize * sizeof(Rpp8u), hipMemcpyHostToDevice);
             }
 
-            double gpu_time_used;
+            double gpu_time_used,omp_time_used;
             switch (test_case)
             {
             case 0:
@@ -1355,11 +1406,14 @@ int main(int argc, char **argv)
                 }
                 maxDstSize.height = maxDstHeight;
                 maxDstSize.width = maxDstWidth;
-
+                hipMemcpy(d_roiTensorPtrSrc, roiTensorPtrSrc, images * sizeof(RpptROI), hipMemcpyHostToDevice);
+                hipMemcpy(d_dstImgSizes, dstImgSizes, images * sizeof(RpptImagePatch), hipMemcpyHostToDevice);
                 start = clock();
-
+                start_omp = omp_get_wtime();
                 if (ip_bitDepth == 0){
-                    rppi_resize_u8_pkd3_batchPD_gpu(d_input, srcSize, maxSize, d_input_second, dstSize, maxDstSize, outputFormatToggle, batchSize, handle);
+                    // rppi_resize_u8_pkd3_batchPD_gpu(d_input, srcSize, maxSize, d_input_second, dstSize, maxDstSize, outputFormatToggle, batchSize, handle);
+                    rppt_resize_gpu(d_input, srcDescPtr, d_output, dstDescPtr, d_dstImgSizes, RpptInterpolationType::TRIANGULAR, d_roiTensorPtrSrc, roiTypeSrc, handle);
+                    
                     rppi_crop_mirror_normalize_u8_pkd3_batchPD_gpu(d_input_second, srcSize, maxSize, d_output, dstSize, maxDstSize, crop_pos_x, crop_pos_y, mean, stdDev, mirrorFlag, outputFormatToggle, batchSize, handle);
                 }
                 else if (ip_bitDepth == 1)
@@ -3212,6 +3266,7 @@ int main(int argc, char **argv)
             }
 
             hipDeviceSynchronize();
+            end_omp = omp_get_wtime();
             end = clock();
 
             if (missingFuncFlag == 1)
@@ -3221,11 +3276,17 @@ int main(int argc, char **argv)
             }
 
             gpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-            if (gpu_time_used > max_time_used)
-                max_time_used = gpu_time_used;
-            if (gpu_time_used < min_time_used)
-                min_time_used = gpu_time_used;
-            avg_time_used += gpu_time_used;
+            // if (gpu_time_used > max_time_used)
+            //     max_time_used = gpu_time_used;
+            // if (gpu_time_used < min_time_used)
+            //     min_time_used = gpu_time_used;
+            // avg_time_used += gpu_time_used;
+            omp_time_used = end_omp - start_omp;
+            if (omp_time_used > max_time_used)
+                max_time_used = omp_time_used;
+            if (omp_time_used < min_time_used)
+                min_time_used = omp_time_used;
+            avg_time_used += omp_time_used;
         }
         release();
     }
