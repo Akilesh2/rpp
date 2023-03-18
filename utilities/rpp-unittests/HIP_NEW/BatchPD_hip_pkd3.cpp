@@ -469,11 +469,12 @@ int main(int argc, char **argv)
 
     struct dirent *de;
     char src1[1000];
-    strcpy(src,"/media/unittest_script/2_image_folder/");
+    strcpy(src,"/media/unittest_script/2_image_folder");
     strcpy(src1, src);
     strcat(src1, "/");
     char src1_second[1000];
-    strcpy(src_second,"/media/unittest_script/2_image_folder/");
+    strcpy(src_second,"/media/unittest_script/rotate_host/rotate_u8_BatchPD_HIP_PKD3_toPKD3");
+    // /home/sloganat/WORKSPACE/akilesh/unittest_script/rotate_host/rotate_u8_BatchPD_HIP_PKD3_toPKD3
     strcpy(src1_second, src_second);
     strcat(src1_second, "/");
     strcat(funcName, funcType);
@@ -873,13 +874,21 @@ int main(int argc, char **argv)
         Rpp32f alpha[images];
         for (i = 0; i < images; i++)
         {
-            alpha[i] = 0.4;
+            alpha[i] = 0.50;
+        }
+        Rpp32f angle[images];
+        for (i = 0; i < images; i++)
+        {
+            angle[i] = 50;
         }
 
         start = clock();
 
         if (ip_bitDepth == 0)
+        {
+            rppi_rotate_u8_pkd3_batchPD_gpu(d_input, srcSize, maxSize, d_input_second, dstSize, maxDstSize, angle, outputFormatToggle, noOfImages, handle);
             rppi_blend_u8_pkd3_batchPD_gpu(d_input, d_input_second, srcSize, maxSize, d_output, alpha, noOfImages, handle);
+        }
         else if (ip_bitDepth == 1)
             missingFuncFlag = 1;
         else if (ip_bitDepth == 2)
@@ -993,7 +1002,7 @@ int main(int argc, char **argv)
         Rpp32u kernelSize[images];
         for (i = 0; i < images; i++)
         {
-            kernelSize[i] = 5;
+            kernelSize[i] = 3;
         }
 
         start = clock();
@@ -1024,7 +1033,7 @@ int main(int argc, char **argv)
         Rpp32f snowPercentage[images];
         for (i = 0; i < images; i++)
         {
-            snowPercentage[i] = 0.15;
+            snowPercentage[i] = 0.2;
         }
 
         start = clock();
@@ -1055,7 +1064,7 @@ int main(int argc, char **argv)
         Rpp32f noiseProbability[images];
         for (i = 0; i < images; i++)
         {
-            noiseProbability[i] = 0.2;
+            noiseProbability[i] = 0.12;
         }
 
         start = clock();
@@ -1163,10 +1172,10 @@ int main(int argc, char **argv)
         Rpp32f transparency[images];
         for (i = 0; i < images; i++)
         {
-            rainPercentage[i] = 0.75;
-            rainWidth[i] = 1;
-            rainHeight[i] = 12;
-            transparency[i] = 0.3;
+            rainPercentage[i] = 0.5;
+            rainWidth[i] = 2;
+            rainHeight[i] = 16;
+            transparency[i] = 0.25;
         }
 
         start = clock();
@@ -1456,12 +1465,12 @@ int main(int argc, char **argv)
         Rpp32u y2[images];
         for (i = 0; i < images; i++)
         {
-            x1[i] = 0;
-            y1[i] = 0;
-            x2[i] = 50;
-            y2[i] = 50;
-            dstSize[i].height = srcSize[i].height / 3;
-            dstSize[i].width = srcSize[i].width / 1.1;
+            x1[i] = 202;
+            y1[i] = 91;
+            x2[i] = 505;
+            y2[i] = 343;
+            dstSize[i].height = srcSize[i].height;//srcSize[i].height / 3;
+            dstSize[i].width = srcSize[i].width;//srcSize[i].width / 1.1;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -1533,12 +1542,12 @@ int main(int argc, char **argv)
         Rpp32f affine_array[6 * images];
         for (i = 0; i < 6 * images; i = i + 6)
         {
-            affine_array[i] = 1.23;
-            affine_array[i + 1] = 0.5;
-            affine_array[i + 2] = 0.0;
-            affine_array[i + 3] = -0.8;
-            affine_array[i + 4] = 0.83;
-            affine_array[i + 5] = 0.0;
+            affine_array[i] = 0.25;
+            affine_array[i + 1] = 1.0;
+            affine_array[i + 2] = 0.25;
+            affine_array[i + 3] = 1.0;
+            affine_array[i + 4] = 5.0;
+            affine_array[i + 5] = 5.0;
         }
 
         start = clock();
@@ -2071,10 +2080,10 @@ int main(int argc, char **argv)
         Rpp32f saturationFactor[images];
         for (i = 0; i < images; i++)
         {
-            alpha[i] = 1.4;
-            beta[i] = 0;
-            hueShift[i] = 60;
-            saturationFactor[i] = 1.9;
+            alpha[i] = 0.2;
+            beta[i] = 10;
+            hueShift[i] = 100;
+            saturationFactor[i] = 0.25;
         }
 
         start = clock();
@@ -2106,8 +2115,8 @@ int main(int argc, char **argv)
         Rpp32u crop_pos_y[images];
         for (i = 0; i < images; i++)
         {
-            dstSize[i].height = 100;
-            dstSize[i].width = 100;
+            dstSize[i].height = 250;
+            dstSize[i].width = 250;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2116,8 +2125,8 @@ int main(int argc, char **argv)
                 minDstHeight = dstSize[i].height;
             if (minDstWidth > dstSize[i].width)
                 minDstWidth = dstSize[i].width;
-            crop_pos_x[i] = 50;
-            crop_pos_y[i] = 50;
+            crop_pos_x[i] = 195;
+            crop_pos_y[i] = 115;
         }
 
         start = clock();
@@ -2152,8 +2161,8 @@ int main(int argc, char **argv)
         Rpp32u mirrorFlag[images];
         for (i = 0; i < images; i++)
         {
-            dstSize[i].height = 100;
-            dstSize[i].width = 100;
+            dstSize[i].height = 300;
+            dstSize[i].width = 300;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2162,8 +2171,8 @@ int main(int argc, char **argv)
                 minDstHeight = dstSize[i].height;
             if (minDstWidth > dstSize[i].width)
                 minDstWidth = dstSize[i].width;
-            crop_pos_x[i] = 50;
-            crop_pos_y[i] = 50;
+            crop_pos_x[i] = 68;
+            crop_pos_y[i] = 36;
             mean[i] = 0.0;
             stdDev[i] = 1.0;
             mirrorFlag[i] = 1;
@@ -2203,10 +2212,10 @@ int main(int argc, char **argv)
         {
             x1[i] = 0;
             y1[i] = 0;
-            x2[i] = 50;
-            y2[i] = 50;
-            dstSize[i].height = srcSize[i].height / 3;
-            dstSize[i].width = srcSize[i].width / 1.1;
+            x2[i] = 250;
+            y2[i] = 250;
+            dstSize[i].height = 300;
+            dstSize[i].width = 300;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2310,7 +2319,7 @@ int main(int argc, char **argv)
         Rpp32f hueShift[images];
         for (i = 0; i < images; i++)
         {
-            hueShift[i] = 60;
+            hueShift[i] = 150;
         }
 
         start = clock();
@@ -2341,7 +2350,7 @@ int main(int argc, char **argv)
         Rpp32f saturationFactor[images];
         for (i = 0; i < images; i++)
         {
-            saturationFactor[i] = 5;
+            saturationFactor[i] = 0.3;
         }
 
         start = clock();
@@ -3438,7 +3447,7 @@ int main(int argc, char **argv)
     strcat(dst, "/");
     count = 0;
     elementsInRowMax = maxWidth * ip_channel;
-
+//*********************************dumping 2 images on a single buffer*****************
     for (j = 0; j <1/* noOfImages*/; j++)
     {
         int height = dstSize[j].height*noOfImages;
@@ -3458,15 +3467,67 @@ int main(int argc, char **argv)
             output_row += elementsInRowMax;
         }
         count += maxHeight * maxWidth * ip_channel;
+        // std::cerr<<"\nimage count "<< j;
+        // int height = dstSize[j].height*noOfImages;
+        // int width = dstSize[j].width;
 
+        // int op_size = height * width * ip_channel* noOfImages;
+        // Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
+        // Rpp8u *temp_output_row;
+        // temp_output_row = temp_output;
+        // Rpp32u elementsInRow = width * ip_channel;
+
+
+        // Rpp8u *output_row = output + count;
+
+        // for (int k = 0; k < height/2; k++)
+        // {
+        //     memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+        //     temp_output_row += elementsInRow;
+        //     output_row += elementsInRowMax;  
+        //     // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        // }
+        // count += maxHeight * maxWidth * ip_channel;
+        // output_row = output + count;
+        // // count += height * width * ip_channel*2;
+        // // output_row = output + count;
+        // for (int k = 0; k < height/2; k++)
+        // {
+        //     memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+        //     temp_output_row += elementsInRow;
+        //     output_row += elementsInRowMax;  
+        //     // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        // }
+//*************************single image on a buffer
+// for (j = 0; j < noOfImages; j++)
+//     {
+//         int height = dstSize[j].height;
+//         int width = dstSize[j].width;
+
+//         int op_size = height * width * ip_channel;
+//         Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
+//         Rpp8u *temp_output_row;
+//         temp_output_row = temp_output;
+//         Rpp32u elementsInRow = width * ip_channel;
+//         Rpp8u *output_row = output + count;
+
+//         for (int k = 0; k < height; k++)
+//         {
+//             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+//             temp_output_row += elementsInRow;
+//             output_row += elementsInRowMax;
+//         }
+//         count += maxHeight * maxWidth * ip_channel;
+///*******************************
         char temp[1000];
         strcpy(temp, dst);
         // strcat(temp, imageNames[j]);
         strcat(temp, "sample.png");
 
 
-        Mat mat_op_image;
+        Mat mat_op_image,mat_color;
         mat_op_image = Mat(height, width, CV_8UC3, temp_output);
+        // cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
         imwrite(temp, mat_op_image);
 
         free(temp_output);

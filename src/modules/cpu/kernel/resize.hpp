@@ -777,6 +777,8 @@ omp_set_dynamic(0);
 #pragma omp parallel for num_threads(dstDescPtr->n)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
+        
+
         RpptROI roi;
         RpptROIPtr roiPtrInput = &roiTensorPtrSrc[batchCount];
         compute_roi_validation_host(roiPtrInput, &roi, &roiDefault, roiType);

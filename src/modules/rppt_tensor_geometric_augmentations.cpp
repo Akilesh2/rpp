@@ -380,6 +380,14 @@ RppStatus rppt_resize_host(RppPtr_t srcPtr,
 
     if(interpolationType == RpptInterpolationType::NEAREST_NEIGHBOR)
     {
+        std::cerr<<"\nRpptInterpolationType::NEAREST_NEIGHBOR ";
+        std::cerr<<"\n RPP dstDescPtr  "<<srcDescPtr->numDims<<"  "<<srcDescPtr->offsetInBytes<<"   "<<srcDescPtr->n<<"   "<<srcDescPtr->h<<"   "<<srcDescPtr->w<<"   "<<srcDescPtr->c;
+
+            std::cerr<<"\n RPP dstImgSizes[0].width  "<<dstImgSizes[0].width<<"  "<<dstImgSizes[0].height;
+            std::cerr<<"\n RPP dstDescPtr  "<<dstDescPtr->numDims<<"  "<<dstDescPtr->offsetInBytes<<"   "<<dstDescPtr->n<<"   "<<dstDescPtr->h<<"   "<<dstDescPtr->w<<"   "<<dstDescPtr->c;
+            std::cerr<<"\n roiTensorPtrSrc[i].xywhROI.roiWidth "<<roiTensorPtrSrc[0].xywhROI.roiWidth<<"   "<<roiTensorPtrSrc[0].xywhROI.roiHeight;
+            std::cerr<<"\n RPP roiType "<<roiType;
+
         if ((srcDescPtr->dataType == RpptDataType::U8) && (dstDescPtr->dataType == RpptDataType::U8))
         {
             resize_nn_u8_u8_host_tensor(static_cast<Rpp8u*>(srcPtr) + srcDescPtr->offsetInBytes,
@@ -427,8 +435,17 @@ RppStatus rppt_resize_host(RppPtr_t srcPtr,
     }
     else if(interpolationType == RpptInterpolationType::BILINEAR)
     {
+        std::cerr<<"\nRpptInterpolationType::BILINEAR ";
+            std::cerr<<"\n RPP dstDescPtr  "<<srcDescPtr->numDims<<"  "<<srcDescPtr->offsetInBytes<<"   "<<srcDescPtr->n<<"   "<<srcDescPtr->h<<"   "<<srcDescPtr->w<<"   "<<srcDescPtr->c;
+
+            std::cerr<<"\n RPP dstImgSizes[0].width  "<<dstImgSizes[0].width<<"  "<<dstImgSizes[0].height;
+            std::cerr<<"\n RPP dstDescPtr  "<<dstDescPtr->numDims<<"  "<<dstDescPtr->offsetInBytes<<"   "<<dstDescPtr->n<<"   "<<dstDescPtr->h<<"   "<<dstDescPtr->w<<"   "<<dstDescPtr->c;
+            std::cerr<<"\n roiTensorPtrSrc[i].xywhROI.roiWidth "<<roiTensorPtrSrc[0].xywhROI.roiWidth<<"   "<<roiTensorPtrSrc[0].xywhROI.roiHeight;
+            std::cerr<<"\n RPP roiType "<<roiType;
         if ((srcDescPtr->dataType == RpptDataType::U8) && (dstDescPtr->dataType == RpptDataType::U8))
         {
+        std::cerr<<"/n RpptDataType::U8 ";
+
             resize_bilinear_u8_u8_host_tensor(static_cast<Rpp8u*>(srcPtr) + srcDescPtr->offsetInBytes,
                                               srcDescPtr,
                                               static_cast<Rpp8u*>(dstPtr) + dstDescPtr->offsetInBytes,

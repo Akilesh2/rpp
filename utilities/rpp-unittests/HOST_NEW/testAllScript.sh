@@ -17,9 +17,12 @@ cwd=$(pwd)
 # DEFAULT_SRC_FOLDER_2="$cwd/../TEST_IMAGES/two_images_224x224_src2"
 
 # Input Images - Three images (224 x 224)
-DEFAULT_SRC_FOLDER_1="/media/unittest_script/2_image_folder_22/"
-DEFAULT_SRC_FOLDER_2="/media/unittest_script/2_image_folder_22/"
+# DEFAULT_SRC_FOLDER_1="$cwd/../TEST_IMAGES/three_images_224x224_src1"
+# DEFAULT_SRC_FOLDER_2="$cwd/../TEST_IMAGES/three_images_224x224_src2"
 
+DEFAULT_SRC_FOLDER_1="/media/unittest_script/2_image_folder"
+DEFAULT_SRC_FOLDER_2="/media/unittest_script/2_image_folder"
+# /home/sloganat/WORKSPACE/akilesh/unittest_script/2_image_folder
 # Input Images - Two images (mixed size)
 # DEFAULT_SRC_FOLDER_1="$cwd/../TEST_IMAGES/two_images_mixed_src1"
 # DEFAULT_SRC_FOLDER_2="$cwd/../TEST_IMAGES/two_images_mixed_src2"
@@ -159,7 +162,7 @@ echo "##########################################################################
 echo "Running all PKD3 Inputs..."
 echo "##########################################################################################"
 
-printf "\n\nUsage: ./BatchPD_host_pkd3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
+printf "\n\nUsage: # ./BatchPD_host_pkd3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
 
 for ((case=$CASE_START;case<=$CASE_END;case++))
 do
@@ -170,7 +173,7 @@ do
     echo "--------------------------------"
     printf "Running a New Functionality...\n"
     echo "--------------------------------"
-    for ((bitDepth=0;bitDepth<7;bitDepth++))
+    for ((bitDepth=0;bitDepth<1;bitDepth++))
     do
         printf "\n\n\nRunning New Bit Depth...\n-------------------------\n\n"
         for ((outputFormatToggle=0;outputFormatToggle<2;outputFormatToggle++))
@@ -197,7 +200,7 @@ do
                 SRC_FOLDER_2_TEMP="$SRC_FOLDER_2"
             fi
 
-            printf "\n./BatchPD_host_pkd3 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
+            printf "\n# ./BatchPD_host_pkd3 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
             ./BatchPD_host_pkd3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
 
             if [ "$case" -eq 8 ]
@@ -235,7 +238,7 @@ echo "##########################################################################
 echo "Running all PLN1 Inputs..."
 echo "##########################################################################################"
 
-printf "\n\nUsage: ./BatchPD_host_pln1 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
+printf "\n\nUsage: # ./BatchPD_host_pln1 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
 
 for ((case=$CASE_START;case<=$CASE_END;case++))
 do
@@ -246,7 +249,7 @@ do
     echo "--------------------------------"
     printf "Running a New Functionality...\n"
     echo "--------------------------------"
-    for ((bitDepth=0;bitDepth<7;bitDepth++))
+    for ((bitDepth=0;bitDepth<1;bitDepth++))
     do
         printf "\n\n\nRunning New Bit Depth...\n-------------------------\n\n"
         for ((outputFormatToggle=0;outputFormatToggle<1;outputFormatToggle++))
@@ -273,8 +276,8 @@ do
                 SRC_FOLDER_2_TEMP="$SRC_FOLDER_2"
             fi
 
-            printf "\n./BatchPD_host_pln1 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
-            ./BatchPD_host_pln1 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+            printf "\n# ./BatchPD_host_pln1 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
+            # ./BatchPD_host_pln1 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
 
             if [ "$case" -eq 8 ]
             then
@@ -311,7 +314,7 @@ echo "##########################################################################
 echo "Running all PLN3 Inputs..."
 echo "##########################################################################################"
 
-printf "\n\nUsage: ./BatchPD_host_pln3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
+printf "\n\nUsage: # ./BatchPD_host_pln3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>"
 
 for ((case=$CASE_START;case<=$CASE_END;case++))
 do
@@ -322,7 +325,7 @@ do
     echo "--------------------------------"
     printf "Running a New Functionality...\n"
     echo "--------------------------------"
-    for ((bitDepth=0;bitDepth<7;bitDepth++))
+    for ((bitDepth=0;bitDepth<1;bitDepth++))
     do
         printf "\n\n\nRunning New Bit Depth...\n-------------------------\n\n"
         for ((outputFormatToggle=0;outputFormatToggle<2;outputFormatToggle++))
@@ -349,8 +352,8 @@ do
                 SRC_FOLDER_2_TEMP="$SRC_FOLDER_2"
             fi
 
-            printf "\n./BatchPD_host_pln3 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
-            ./BatchPD_host_pln3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+            printf "\n# ./BatchPD_host_pln3 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
+            # ./BatchPD_host_pln3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
 
             if [ "$case" -eq 8 ]
             then
@@ -397,7 +400,7 @@ then
         echo "--------------------------------" | tee -a "$DST_FOLDER/uniqueFunctionalities_host_log.txt"
         printf "Running a New Functionality...\n" | tee -a "$DST_FOLDER/uniqueFunctionalities_host_log.txt"
         echo "--------------------------------" | tee -a "$DST_FOLDER/uniqueFunctionalities_host_log.txt"
-        for ((bitDepth=0;bitDepth<7;bitDepth++))
+        for ((bitDepth=0;bitDepth<1;bitDepth++))
         do
             printf "\n\n\nRunning New Bit Depth...\n-------------------------\n\n" | tee -a "$DST_FOLDER/uniqueFunctionalities_host_log.txt"
             echo "./uniqueFunctionalities_host $bitDepth $case" | tee -a "$DST_FOLDER/uniqueFunctionalities_host_log.txt"
