@@ -395,7 +395,7 @@ void decode(unsigned char *input_buffer, size_t input_size, unsigned char *outpu
                                   size_t original_image_width, size_t original_image_height,
                                   size_t &actual_decoded_width, size_t &actual_decoded_height)
 {
-    int tjpf = TJPF_BGR;
+    int tjpf = TJPF_RGB;
     int planes = 3;
 
     if (original_image_width < max_decoded_width)
@@ -433,7 +433,7 @@ void decode(unsigned char *input_buffer, size_t input_size, unsigned char *outpu
                         max_decoded_width * planes,
                         max_decoded_height,
                         tjpf,
-                        TJFLAG_FASTDCT,
+                        TJFLAG_ACCURATEDCT,
                         crop_width, crop_height) != 0)
 
         {
@@ -463,7 +463,7 @@ void decode(unsigned char *input_buffer, size_t input_size, unsigned char *outpu
                         max_decoded_width * planes,
                         actual_decoded_height,
                         tjpf,
-                        TJFLAG_FASTDCT) != 0) {
+                        TJFLAG_ACCURATEDCT) != 0) {
             std::cerr<<"KO::Jpeg image decode failed "<<STR(tjGetErrorStr2(m_jpegDecompressor));
             exit(0);
         }

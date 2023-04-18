@@ -1,0 +1,132 @@
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/local/lib/cmake/Boost-1.72.0/BoostConfig.cmake (found version "1.72.0") found components: filesystem system 
+-- Found OpenMP_C: -fopenmp (found version "4.5") 
+-- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+-- Found OpenMP: TRUE (found version "4.5")  
+-- [32mrpp_unittests/HOST_NEW set to build with rpp and OpenCV[m
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/build
+[ 14%] Building CXX object CMakeFiles/BatchPD_host_pln3.dir/BatchPD_host_pln3.cpp.o
+[ 14%] Building CXX object CMakeFiles/BatchPD_host_pln1.dir/BatchPD_host_pln1.cpp.o
+[ 21%] Building CXX object CMakeFiles/BatchPD_host_pkd3.dir/BatchPD_host_pkd3.cpp.o
+[ 28%] Building CXX object CMakeFiles/Tensor_host_pkd3.dir/Tensor_host_pkd3.cpp.o
+[ 42%] Building CXX object CMakeFiles/Tensor_host_pln1.dir/Tensor_host_pln1.cpp.o
+[ 42%] Building CXX object CMakeFiles/uniqueFunctionalities_host.dir/uniqueFunctionalities_host.cpp.o
+[ 50%] Building CXX object CMakeFiles/Tensor_host_pln3.dir/Tensor_host_pln3.cpp.o
+[ 57%] Linking CXX executable uniqueFunctionalities_host
+[ 64%] Linking CXX executable Tensor_host_pln1
+[ 64%] Built target uniqueFunctionalities_host
+[ 71%] Linking CXX executable Tensor_host_pln3
+[ 78%] Linking CXX executable Tensor_host_pkd3
+[ 85%] Linking CXX executable BatchPD_host_pln1
+[ 85%] Built target Tensor_host_pln1
+[ 92%] Linking CXX executable BatchPD_host_pln3
+[ 92%] Built target Tensor_host_pln3
+[100%] Linking CXX executable BatchPD_host_pkd3
+[100%] Built target Tensor_host_pkd3
+[100%] Built target BatchPD_host_pln1
+[100%] Built target BatchPD_host_pln3
+[100%] Built target BatchPD_host_pkd3
+
+
+
+
+
+##########################################################################################
+Running all PKD3 Inputs...
+##########################################################################################
+
+
+Usage: # ./BatchPD_host_pkd3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>
+
+
+
+--------------------------------
+Running a New Functionality...
+--------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+# ./BatchPD_host_pkd3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pkd3_fused_functions 0 0 37 0./testAllScript.sh: line 228: 148508 Segmentation fault      (core dumped) ./BatchPD_host_pkd3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+
+./Tensor_host_pkd3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pkd3_fused_functions 0 0 37 0./testAllScript.sh: line 228: 148509 Segmentation fault      (core dumped) ./Tensor_host_pkd3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+------------------------------------------------------------------------------------------
+
+# ./BatchPD_host_pkd3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pkd3_fused_functions 0 1 37 0./testAllScript.sh: line 228: 148510 Segmentation fault      (core dumped) ./BatchPD_host_pkd3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+
+./Tensor_host_pkd3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pkd3_fused_functions 0 1 37 0./testAllScript.sh: line 228: 148511 Segmentation fault      (core dumped) ./Tensor_host_pkd3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+------------------------------------------------------------------------------------------
+
+
+
+
+
+##########################################################################################
+Running all PLN1 Inputs...
+##########################################################################################
+
+
+Usage: # ./BatchPD_host_pln1 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>
+
+
+
+--------------------------------
+Running a New Functionality...
+--------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+# ./BatchPD_host_pln1 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln1_fused_functions 0 0 37 0
+./Tensor_host_pln1 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln1_fused_functions 0 0 37 0./testAllScript.sh: line 304: 148515 Segmentation fault      (core dumped) ./Tensor_host_pln1 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+------------------------------------------------------------------------------------------
+
+
+
+
+
+##########################################################################################
+Running all PLN3 Inputs...
+##########################################################################################
+
+
+Usage: # ./BatchPD_host_pln3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>
+
+
+
+--------------------------------
+Running a New Functionality...
+--------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+# ./BatchPD_host_pln3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln3_fused_functions 0 0 37 0
+./Tensor_host_pln3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln3_fused_functions 0 0 37 0./testAllScript.sh: line 380: 148519 Segmentation fault      (core dumped) ./Tensor_host_pln3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+------------------------------------------------------------------------------------------
+
+# ./BatchPD_host_pln3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln3_fused_functions 0 1 37 0
+./Tensor_host_pln3 /media/unittest_script/2_image_folder /media/unittest_script/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HOST_NEW/../OUTPUT_IMAGES_HOST_NEW/rpp_host_pln3_fused_functions 0 1 37 0./testAllScript.sh: line 380: 148520 Segmentation fault      (core dumped) ./Tensor_host_pln3 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+------------------------------------------------------------------------------------------

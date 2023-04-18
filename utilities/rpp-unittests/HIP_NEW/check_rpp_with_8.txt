@@ -1,0 +1,752 @@
+mkdir: cannot create directory ‘/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW’: File exists
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPKD3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPKD3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPKD3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPLN3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPLN3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPLN3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_BatchPD_HIP_PKD3_toPKD3/Flip_rgb_hip.png'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_BatchPD_HIP_PKD3_toPKD3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPKD3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPKD3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPKD3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPLN3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPLN3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPLN3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPLN3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPLN3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f32_Tensor_HIP_PKD3_toPLN3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPKD3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPKD3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_u8_Tensor_HIP_PKD3_toPKD3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPLN3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPLN3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_i8_Tensor_HIP_PKD3_toPLN3'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPKD3/000000456559.jpg'
+removed '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPKD3/000000557501.jpg'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms/flip_f16_Tensor_HIP_PKD3_toPKD3'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3/rpp_hip_pkd3_geometry_transforms'
+removed directory '/media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/PKD3'
+mkdir: cannot create directory ‘build’: File exists
+removed './0.csv'
+removed './1.csv'
+removed './2.csv'
+removed './5.csv'
+removed './BatchPD_hip_pkd3'
+removed './BatchPD_hip_pln1'
+removed './BatchPD_hip_pln3'
+removed './CMakeCache.txt'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/depend.make'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/progress.make'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/compiler_depend.ts'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/cmake_clean.cmake'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/compiler_depend.make'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/DependInfo.cmake'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/flags.make'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/Tensor_hip_pkd3.cpp.o.d'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/link.txt'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/build.make'
+removed './CMakeFiles/Tensor_hip_pkd3.dir/Tensor_hip_pkd3.cpp.o'
+removed directory './CMakeFiles/Tensor_hip_pkd3.dir'
+removed './CMakeFiles/Tensor_hip_pln1.dir/depend.make'
+removed './CMakeFiles/Tensor_hip_pln1.dir/Tensor_hip_pln1.cpp.o.d'
+removed './CMakeFiles/Tensor_hip_pln1.dir/progress.make'
+removed './CMakeFiles/Tensor_hip_pln1.dir/Tensor_hip_pln1.cpp.o'
+removed './CMakeFiles/Tensor_hip_pln1.dir/compiler_depend.ts'
+removed './CMakeFiles/Tensor_hip_pln1.dir/cmake_clean.cmake'
+removed './CMakeFiles/Tensor_hip_pln1.dir/compiler_depend.make'
+removed './CMakeFiles/Tensor_hip_pln1.dir/DependInfo.cmake'
+removed './CMakeFiles/Tensor_hip_pln1.dir/flags.make'
+removed './CMakeFiles/Tensor_hip_pln1.dir/link.txt'
+removed './CMakeFiles/Tensor_hip_pln1.dir/build.make'
+removed directory './CMakeFiles/Tensor_hip_pln1.dir'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/depend.make'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/BatchPD_hip_pkd3.cpp.o.d'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/progress.make'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/compiler_depend.ts'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/cmake_clean.cmake'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/compiler_depend.make'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/DependInfo.cmake'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/flags.make'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/link.txt'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/build.make'
+removed './CMakeFiles/BatchPD_hip_pkd3.dir/BatchPD_hip_pkd3.cpp.o'
+removed directory './CMakeFiles/BatchPD_hip_pkd3.dir'
+removed './CMakeFiles/FindOpenMP/OpenMPTryFlag.c'
+removed './CMakeFiles/FindOpenMP/OpenMPTryFlag.cpp'
+removed './CMakeFiles/FindOpenMP/ompver_C.bin'
+removed './CMakeFiles/FindOpenMP/OpenMPCheckVersion.c'
+removed './CMakeFiles/FindOpenMP/ompver_CXX.bin'
+removed './CMakeFiles/FindOpenMP/OpenMPCheckVersion.cpp'
+removed directory './CMakeFiles/FindOpenMP'
+removed './CMakeFiles/progress.marks'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/depend.make'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/progress.make'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/compiler_depend.ts'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/cmake_clean.cmake'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/compiler_depend.make'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/DependInfo.cmake'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/flags.make'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/BatchPD_hip_pln1.cpp.o'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/link.txt'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/build.make'
+removed './CMakeFiles/BatchPD_hip_pln1.dir/BatchPD_hip_pln1.cpp.o.d'
+removed directory './CMakeFiles/BatchPD_hip_pln1.dir'
+removed './CMakeFiles/TargetDirectories.txt'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/depend.make'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/progress.make'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/uniqueFunctionalities_hip.cpp.o.d'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/compiler_depend.ts'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/cmake_clean.cmake'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/compiler_depend.make'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/DependInfo.cmake'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/uniqueFunctionalities_hip.cpp.o'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/flags.make'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/link.txt'
+removed './CMakeFiles/uniqueFunctionalities_hip.dir/build.make'
+removed directory './CMakeFiles/uniqueFunctionalities_hip.dir'
+removed './CMakeFiles/CMakeError.log'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/depend.make'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/BatchPD_hip_pln3.cpp.o'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/progress.make'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/compiler_depend.ts'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/cmake_clean.cmake'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/BatchPD_hip_pln3.cpp.o.d'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/compiler_depend.make'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/DependInfo.cmake'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/flags.make'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/link.txt'
+removed './CMakeFiles/BatchPD_hip_pln3.dir/build.make'
+removed directory './CMakeFiles/BatchPD_hip_pln3.dir'
+removed './CMakeFiles/Makefile2'
+removed directory './CMakeFiles/CMakeTmp'
+removed './CMakeFiles/CMakeOutput.log'
+removed './CMakeFiles/Makefile.cmake'
+removed './CMakeFiles/CMakeDirectoryInformation.cmake'
+removed './CMakeFiles/3.22.1/CMakeDetermineCompilerABI_C.bin'
+removed './CMakeFiles/3.22.1/CMakeDetermineCompilerABI_CXX.bin'
+removed './CMakeFiles/3.22.1/CMakeCCompiler.cmake'
+removed './CMakeFiles/3.22.1/CompilerIdCXX/a.out'
+removed directory './CMakeFiles/3.22.1/CompilerIdCXX/tmp'
+removed './CMakeFiles/3.22.1/CompilerIdCXX/CMakeCXXCompilerId.cpp'
+removed directory './CMakeFiles/3.22.1/CompilerIdCXX'
+removed './CMakeFiles/3.22.1/CompilerIdC/a.out'
+removed directory './CMakeFiles/3.22.1/CompilerIdC/tmp'
+removed './CMakeFiles/3.22.1/CompilerIdC/CMakeCCompilerId.c'
+removed directory './CMakeFiles/3.22.1/CompilerIdC'
+removed './CMakeFiles/3.22.1/CMakeSystem.cmake'
+removed './CMakeFiles/3.22.1/CMakeCXXCompiler.cmake'
+removed directory './CMakeFiles/3.22.1'
+removed './CMakeFiles/Tensor_hip_pln3.dir/depend.make'
+removed './CMakeFiles/Tensor_hip_pln3.dir/progress.make'
+removed './CMakeFiles/Tensor_hip_pln3.dir/compiler_depend.ts'
+removed './CMakeFiles/Tensor_hip_pln3.dir/cmake_clean.cmake'
+removed './CMakeFiles/Tensor_hip_pln3.dir/compiler_depend.make'
+removed './CMakeFiles/Tensor_hip_pln3.dir/Tensor_hip_pln3.cpp.o'
+removed './CMakeFiles/Tensor_hip_pln3.dir/DependInfo.cmake'
+removed './CMakeFiles/Tensor_hip_pln3.dir/Tensor_hip_pln3.cpp.o.d'
+removed './CMakeFiles/Tensor_hip_pln3.dir/flags.make'
+removed './CMakeFiles/Tensor_hip_pln3.dir/link.txt'
+removed './CMakeFiles/Tensor_hip_pln3.dir/build.make'
+removed directory './CMakeFiles/Tensor_hip_pln3.dir'
+removed './CMakeFiles/cmake.check_cache'
+removed directory './CMakeFiles'
+removed './Makefile'
+removed './Tensor_hip_pkd3'
+removed './Tensor_hip_pln1'
+removed './Tensor_hip_pln3'
+removed './cmake_install.cmake'
+removed './uniqueFunctionalities_hip'
+-- The C compiler identification is GNU 9.4.0
+-- The CXX compiler identification is GNU 9.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- hip::amdhip64 is SHARED_LIBRARY
+-- Found Boost: /usr/local/lib/cmake/Boost-1.72.0/BoostConfig.cmake (found version "1.72.0") found components: filesystem system 
+-- Found OpenMP_C: -fopenmp (found version "4.5") 
+-- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+-- Found OpenMP: TRUE (found version "4.5")  
+-- [32mrpp_unittests/HIP_NEW set to build with rpp, hip and OpenCV[m
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/build
+[  7%] Building CXX object CMakeFiles/BatchPD_hip_pln1.dir/BatchPD_hip_pln1.cpp.o
+[ 14%] Building CXX object CMakeFiles/Tensor_hip_pln1.dir/Tensor_hip_pln1.cpp.o
+[ 21%] Building CXX object CMakeFiles/BatchPD_hip_pln3.dir/BatchPD_hip_pln3.cpp.o
+[ 28%] Building CXX object CMakeFiles/BatchPD_hip_pkd3.dir/BatchPD_hip_pkd3.cpp.o
+[ 35%] Building CXX object CMakeFiles/Tensor_hip_pln3.dir/Tensor_hip_pln3.cpp.o
+[ 42%] Building CXX object CMakeFiles/Tensor_hip_pkd3.dir/Tensor_hip_pkd3.cpp.o
+[ 50%] Building CXX object CMakeFiles/uniqueFunctionalities_hip.dir/uniqueFunctionalities_hip.cpp.o
+[ 57%] Linking CXX executable uniqueFunctionalities_hip
+[ 64%] Linking CXX executable Tensor_hip_pln3
+[ 71%] Linking CXX executable Tensor_hip_pln1
+[ 71%] Built target uniqueFunctionalities_hip
+[ 78%] Linking CXX executable BatchPD_hip_pln1
+[ 85%] Linking CXX executable Tensor_hip_pkd3
+[ 92%] Linking CXX executable BatchPD_hip_pln3
+[ 92%] Built target Tensor_hip_pln3
+[100%] Linking CXX executable BatchPD_hip_pkd3
+[100%] Built target Tensor_hip_pln1
+[100%] Built target BatchPD_hip_pln1
+[100%] Built target Tensor_hip_pkd3
+[100%] Built target BatchPD_hip_pln3
+[100%] Built target BatchPD_hip_pkd3
+
+
+
+
+
+##########################################################################################
+Running all PKD3 Inputs...
+##########################################################################################
+
+
+Usage: ./BatchPD_hip_pkd3 <src1 folder> <src2 folder (place same as src1 folder for single image functionalities)> <dst folder> <u8 = 0 / f16 = 1 / f32 = 2 / u8->f16 = 3 / u8->f32 = 4 / i8 = 5 / u8->i8 = 6> <outputFormatToggle (pkd->pkd = 0 / pkd->pln = 1)> <case number = 0:86> <verbosity = 0/1>
+
+
+
+--------------------------------
+Running a New Functionality...
+--------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 0 0 20 0
+Running flip_u8_BatchPD_HIP_PKD3_toPKD3...imageNames 000000456559.jpg  000000557501.jpgAfter imageNames 000000456559.jpg  000000557501.jpg
+GPU Time - BatchPD : 0.001742
+
+image count 0
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 0 0 20 0
+Running flip_u8_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+GPU Time - Tensor : 0.022071s
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 0 1 20 0
+Running flip_u8_BatchPD_HIP_PKD3_toPKD3...imageNames 000000456559.jpg  000000557501.jpgAfter imageNames 000000456559.jpg  000000557501.jpg
+GPU Time - BatchPD : 0.001782
+
+image count 0
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 0 1 20 0
+Running flip_u8_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+GPU Time - Tensor : 0.021686s
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 1 0 20 0
+Running flip_f16_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_f16_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 1 0 20 0
+Running flip_f16_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+GPU Time - Tensor : 0.021592s
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 1 1 20 0
+Running flip_f16_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_f16_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 1 1 20 0
+Running flip_f16_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+GPU Time - Tensor : 0.021481s
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 2 0 20 0
+Running flip_f32_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_f32_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 2 0 20 0
+Running flip_f32_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+GPU Time - Tensor : 0.021606s
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 2 1 20 0
+Running flip_f32_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_f32_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 2 1 20 0
+Running flip_f32_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+GPU Time - Tensor : 0.021572s
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 3 0 20 0
+Running flip_u8_f16_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_f16_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 3 0 20 0
+Running flip_u8_f16_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+The functionality flip_u8_f16_Tensor_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 3 1 20 0
+Running flip_u8_f16_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_f16_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 3 1 20 0
+Running flip_u8_f16_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+The functionality flip_u8_f16_Tensor_HIP_PKD3_toPLN3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 4 0 20 0
+Running flip_u8_f32_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_f32_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 4 0 20 0
+Running flip_u8_f32_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+The functionality flip_u8_f32_Tensor_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 4 1 20 0
+Running flip_u8_f32_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_f32_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 4 1 20 0
+Running flip_u8_f32_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+The functionality flip_u8_f32_Tensor_HIP_PKD3_toPLN3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 5 0 20 0
+Running flip_i8_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_i8_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 5 0 20 0
+Running flip_i8_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+GPU Time - Tensor : 0.021501s
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 5 1 20 0
+Running flip_i8_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_i8_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 5 1 20 0
+Running flip_i8_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+GPU Time - Tensor : 0.021518s
+------------------------------------------------------------------------------------------
+
+
+
+Running New Bit Depth...
+-------------------------
+
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 6 0 20 0
+Running flip_u8_i8_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_i8_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 6 0 20 0
+Running flip_u8_i8_Tensor_HIP_PKD3_toPKD3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+The functionality flip_u8_i8_Tensor_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------
+
+./BatchPD_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 6 1 20 0
+Running flip_u8_i8_BatchPD_HIP_PKD3_toPKD3...
+The functionality flip_u8_i8_BatchPD_HIP_PKD3_toPKD3 doesn't yet exist in RPP
+
+#./Tensor_hip_pkd3 /media/final_testing/2_image_folder /media/final_testing/2_image_folder /media/final_testing/dev_work/rpp/utilities/rpp-unittests/HIP_NEW/../OUTPUT_IMAGES_HIP_NEW/rpp_hip_pkd3_geometry_transforms 6 1 20 0
+Running flip_u8_i8_Tensor_HIP_PKD3_toPLN3...
+
+ before reading image 1   
+
+descPtr->n 2
+inputImagePath /media/final_testing/2_image_folder/000000456559.jpg
+
+inputImagePath /media/final_testing/2_image_folder/000000557501.jpg
+
+
+ after reading image 1 
+printing input buffer
+
+197	197	195	195	195	193	198	198	196	201	201	199	200	200	198	201	201	199	201	201	199	198	198	196	200	200	200	200	200	200	
+200	200	198	198	198	196	200	200	198	201	201	199	199	199	197	199	199	197	199	199	197	196	196	194	200	200	200	200	200	200	
+198	200	197	196	198	195	198	200	197	199	201	198	197	199	196	198	200	197	200	202	199	198	200	197	201	201	201	200	200	200	
+196	200	199	194	198	197	196	200	199	197	201	200	195	199	198	196	200	199	199	203	202	198	202	201	201	201	199	200	200	198	
+199	203	202	196	200	199	198	202	201	197	201	200	194	198	197	194	198	197	197	201	200	196	200	199	201	201	199	200	200	198	
+199	201	200	197	199	198	199	201	200	200	202	201	196	198	197	197	199	198	200	202	201	200	202	201	200	202	199	199	201	198	
+196	196	196	196	196	196	199	199	199	201	201	201	198	198	198	200	200	200	203	203	203	203	203	203	199	201	196	199	201	198	
+198	198	198	198	198	198	201	201	201	201	201	201	198	198	198	198	198	198	201	201	201	201	201	201	198	200	195	199	201	196	
+196	198	195	195	197	194	199	201	198	201	203	200	198	200	199	198	200	199	200	202	201	199	200	202	196	201	195	198	203	197	
+197	199	196	197	199	196	200	202	199	201	203	200	198	200	199	198	200	199	200	202	201	199	201	200	197	202	196	201	203	198	
+ srcDescPtr 2  3  480  640  4  0  1  921600  921600  1  1920  3
+
+ dstDescPtr 2  3  480  640  4  0  0  921600  921600  307200  640  1
+
+The functionality flip_u8_i8_Tensor_HIP_PKD3_toPLN3 doesn't yet exist in RPP
+------------------------------------------------------------------------------------------

@@ -469,11 +469,11 @@ int main(int argc, char **argv)
 
     struct dirent *de;
     char src1[1000];
-    strcpy(src,"/media/unittest_script/2_image_folder");
+    strcpy(src,"/media/final_testing/2_image_folder");
     strcpy(src1, src);
     strcat(src1, "/");
     char src1_second[1000];
-    strcpy(src_second,"/media/unittest_script/rotate_host/rotate_u8_BatchPD_HIP_PKD3_toPKD3");
+    strcpy(src_second,"/media/final_testing/2_image_folder");
     // /home/sloganat/WORKSPACE/akilesh/unittest_script/rotate_host/rotate_u8_BatchPD_HIP_PKD3_toPKD3
     strcpy(src1_second, src_second);
     strcat(src1_second, "/");
@@ -805,7 +805,7 @@ int main(int argc, char **argv)
     {
     case 0:
     {
-        test_case_name = "brightness";
+        test_case_name = "Brightness_rgb_hip";
 
         Rpp32f alpha[images];
         Rpp32f beta[images];
@@ -869,7 +869,7 @@ int main(int argc, char **argv)
     }
     case 2:
     {
-        test_case_name = "blend";
+        test_case_name = "Blend_rgb_hip";
 
         Rpp32f alpha[images];
         for (i = 0; i < images; i++)
@@ -908,7 +908,7 @@ int main(int argc, char **argv)
     }
     case 3:
     {
-        test_case_name = "blur";
+        test_case_name = "Blur_rgb_hip";
 
         Rpp32u kernelSize[images];
         for (i = 0; i < images; i++)
@@ -939,7 +939,7 @@ int main(int argc, char **argv)
     }
     case 4:
     {
-        test_case_name = "contrast";
+        test_case_name = "Contrast_rgb_hip";
 
         Rpp32u newMin[images];
         Rpp32u newMax[images];
@@ -972,7 +972,7 @@ int main(int argc, char **argv)
     }
     case 5:
     {
-        test_case_name = "pixelate";
+        test_case_name = "Pixelate_rgb_hip";
 
         start = clock();
 
@@ -1133,7 +1133,7 @@ int main(int argc, char **argv)
     }
     case 10:
     {
-        test_case_name = "fog";
+        test_case_name = "Fog_rgb_hip";
 
         Rpp32f fogValue[images];
         for (i = 0; i < images; i++)
@@ -1250,7 +1250,7 @@ int main(int argc, char **argv)
     }
     case 13:
     {
-        test_case_name = "exposure";
+        test_case_name = "Exposure_rgb_hip";
 
         Rpp32f exposureFactor[images];
         for (i = 0; i < images; i++)
@@ -1385,7 +1385,7 @@ int main(int argc, char **argv)
     }
     case 20:
     {
-        test_case_name = "flip";
+        test_case_name = "Flip_rgb_hip";
 
         Rpp32u flipAxis[images];
         for (i = 0; i < images; i++)
@@ -1416,7 +1416,7 @@ int main(int argc, char **argv)
     }
     case 21:
     {
-        test_case_name = "resize";
+        test_case_name = "Resize_rgb_hip";
 
         for (i = 0; i < images; i++)
         {
@@ -1506,7 +1506,7 @@ int main(int argc, char **argv)
     }
     case 23:
     {
-        test_case_name = "rotate";
+        test_case_name = "Rotate_rgb_hip";
 
         Rpp32f angle[images];
         for (i = 0; i < images; i++)
@@ -1537,7 +1537,7 @@ int main(int argc, char **argv)
     }
     case 24:
     {
-        test_case_name = "warp_affine";
+        test_case_name = "warpAffine_rgb_hip";
 
         Rpp32f affine_array[6 * images];
         for (i = 0; i < 6 * images; i = i + 6)
@@ -1573,7 +1573,7 @@ int main(int argc, char **argv)
     }
     case 25:
     {
-        test_case_name = "fisheye";
+        test_case_name = "FishEye_rgb_hip";
 
         start = clock();
 
@@ -1598,7 +1598,7 @@ int main(int argc, char **argv)
     }
     case 26:
     {
-        test_case_name = "lens_correction";
+        test_case_name = "LenCorrection_rgb_hip";
 
         Rpp32f strength[images];
         Rpp32f zoom[images];
@@ -2072,7 +2072,7 @@ int main(int argc, char **argv)
     }
     case 36:
     {
-        test_case_name = "color_twist";
+        test_case_name = "ColorTwist_rgb_hip";
 
         Rpp32f alpha[images];
         Rpp32f beta[images];
@@ -2109,14 +2109,14 @@ int main(int argc, char **argv)
     }
     case 37:
     {
-        test_case_name = "crop";
+        test_case_name = "Crop_rgb_hip";
 
         Rpp32u crop_pos_x[images];
         Rpp32u crop_pos_y[images];
         for (i = 0; i < images; i++)
         {
-            dstSize[i].height = 250;
-            dstSize[i].width = 250;
+            dstSize[i].height = 224;
+            dstSize[i].width = 224;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2125,9 +2125,19 @@ int main(int argc, char **argv)
                 minDstHeight = dstSize[i].height;
             if (minDstWidth > dstSize[i].width)
                 minDstWidth = dstSize[i].width;
-            crop_pos_x[i] = 195;
-            crop_pos_y[i] = 115;
+            crop_pos_x[i] = 0;
+            crop_pos_y[i] = 0;
         }
+        maxDstSize.width=maxDstWidth;
+        maxDstSize.height=maxDstHeight;
+        // std::cerr<<
+        std::cerr<<" \n srcSize "<<srcSize->width<<"  "<<srcSize->height;
+        std::cerr<<"\n maxSize "<<maxSize.width<<"  "<<maxSize.height ;
+        std::cerr<<"\n dstSize "<<dstSize->width<<"  "<<dstSize->height;
+        std::cerr<<"\n maxDstSize "<<maxDstSize.width<<"  "<<maxDstSize.height ;
+        std::cerr<<"\n crop_pos_x nad crop_pos_x "<<crop_pos_x[0]<<"  "<<crop_pos_y[0];
+        std::cerr<<"\n outputFormatToggle "<<outputFormatToggle;
+
 
         start = clock();
 
@@ -2152,7 +2162,7 @@ int main(int argc, char **argv)
     }
     case 38:
     {
-        test_case_name = "crop_mirror_normalize";
+        test_case_name = "CropMirrorNormalize_rgb_hip";
 
         Rpp32u crop_pos_x[images];
         Rpp32u crop_pos_y[images];
@@ -2161,8 +2171,8 @@ int main(int argc, char **argv)
         Rpp32u mirrorFlag[images];
         for (i = 0; i < images; i++)
         {
-            dstSize[i].height = 300;
-            dstSize[i].width = 300;
+            dstSize[i].height = 224;
+            dstSize[i].width = 224;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2171,8 +2181,8 @@ int main(int argc, char **argv)
                 minDstHeight = dstSize[i].height;
             if (minDstWidth > dstSize[i].width)
                 minDstWidth = dstSize[i].width;
-            crop_pos_x[i] = 68;
-            crop_pos_y[i] = 36;
+            crop_pos_x[i] = 83;
+            crop_pos_y[i] = 51;
             mean[i] = 0.0;
             stdDev[i] = 1.0;
             mirrorFlag[i] = 1;
@@ -2201,7 +2211,7 @@ int main(int argc, char **argv)
     }
     case 39:
     {
-        test_case_name = "resize_crop_mirror";
+        test_case_name = "ResizeCropMirror_rgb_hip";
 
         Rpp32u x1[images];
         Rpp32u y1[images];
@@ -2314,7 +2324,7 @@ int main(int argc, char **argv)
     }
     case 42:
     {
-        test_case_name = "hueRGB";
+        test_case_name = "Hue_rgb_hip";
 
         Rpp32f hueShift[images];
         for (i = 0; i < images; i++)
@@ -2345,7 +2355,7 @@ int main(int argc, char **argv)
     }
     case 43:
     {
-        test_case_name = "saturationRGB";
+        test_case_name = "Saturation_rgb_hip";
 
         Rpp32f saturationFactor[images];
         for (i = 0; i < images; i++)
@@ -2414,7 +2424,7 @@ int main(int argc, char **argv)
     }
     case 45:
     {
-        test_case_name = "color_temperature";
+        test_case_name = "ColorTemperature_rgb_hip";
 
         Rpp32s adjustmentValue[images];
         for (i = 0; i < images; i++)
@@ -2445,7 +2455,7 @@ int main(int argc, char **argv)
     }
     case 46:
     {
-        test_case_name = "vignette";
+        test_case_name = "Vignette_rgb_hip";
 
         Rpp32f stdDev[images];
         for (i = 0; i < images; i++)
@@ -3448,90 +3458,56 @@ int main(int argc, char **argv)
     count = 0;
     elementsInRowMax = maxWidth * ip_channel;
 //*********************************dumping 2 images on a single buffer*****************
-    for (j = 0; j <1/* noOfImages*/; j++)
+    for (j = 0; j < 1/*noOfImages*/; j++)
     {
+        std::cerr<<"\nimage count "<< j;
         int height = dstSize[j].height*noOfImages;
         int width = dstSize[j].width;
 
-        int op_size = height * width * ip_channel*noOfImages;
+        int op_size = height * width * ip_channel* noOfImages;
         Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
         Rpp8u *temp_output_row;
         temp_output_row = temp_output;
         Rpp32u elementsInRow = width * ip_channel;
+
+
         Rpp8u *output_row = output + count;
 
-        for (int k = 0; k < height; k++)
+        for (int k = 0; k < height/2; k++)
         {
             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
             temp_output_row += elementsInRow;
-            output_row += elementsInRowMax;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
         }
         count += maxHeight * maxWidth * ip_channel;
-        // std::cerr<<"\nimage count "<< j;
-        // int height = dstSize[j].height*noOfImages;
-        // int width = dstSize[j].width;
-
-        // int op_size = height * width * ip_channel* noOfImages;
-        // Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
-        // Rpp8u *temp_output_row;
-        // temp_output_row = temp_output;
-        // Rpp32u elementsInRow = width * ip_channel;
-
-
-        // Rpp8u *output_row = output + count;
-
-        // for (int k = 0; k < height/2; k++)
-        // {
-        //     memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
-        //     temp_output_row += elementsInRow;
-        //     output_row += elementsInRowMax;  
-        //     // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
-        // }
-        // count += maxHeight * maxWidth * ip_channel;
+        output_row = output + count;
+        // count += height * width * ip_channel*2;
         // output_row = output + count;
-        // // count += height * width * ip_channel*2;
-        // // output_row = output + count;
-        // for (int k = 0; k < height/2; k++)
-        // {
-        //     memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
-        //     temp_output_row += elementsInRow;
-        //     output_row += elementsInRowMax;  
-        //     // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
-        // }
-//*************************single image on a buffer
-// for (j = 0; j < noOfImages; j++)
-//     {
-//         int height = dstSize[j].height;
-//         int width = dstSize[j].width;
+        for (int k = 0; k < height/2; k++)
+        {
+            memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+            temp_output_row += elementsInRow;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        }
 
-//         int op_size = height * width * ip_channel;
-//         Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
-//         Rpp8u *temp_output_row;
-//         temp_output_row = temp_output;
-//         Rpp32u elementsInRow = width * ip_channel;
-//         Rpp8u *output_row = output + count;
-
-//         for (int k = 0; k < height; k++)
-//         {
-//             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
-//             temp_output_row += elementsInRow;
-//             output_row += elementsInRowMax;
-//         }
-//         count += maxHeight * maxWidth * ip_channel;
-///*******************************
         char temp[1000];
         strcpy(temp, dst);
         // strcat(temp, imageNames[j]);
-        strcat(temp, "sample.png");
-
+        string out_name=test_case_name+".png";
+        strcat(temp, out_name.c_str());
+        // strcat(temp, "sample.png");
 
         Mat mat_op_image,mat_color;
         mat_op_image = Mat(height, width, CV_8UC3, temp_output);
-        // cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
-        imwrite(temp, mat_op_image);
+        cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
+
+        imwrite(temp, mat_color);
+        // imwrite(temp, mat_op_image);
 
         free(temp_output);
-    }
+    } 
 
     free(srcSize);
     free(dstSize);
