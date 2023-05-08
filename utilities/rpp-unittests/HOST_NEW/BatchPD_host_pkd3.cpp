@@ -455,11 +455,11 @@ int main(int argc, char **argv)
 
     struct dirent *de;
     char src1[1000];
-    strcpy(src,"/media/final_testing/2_image_folder");
+    strcpy(src,"/dockerx/images");
     strcpy(src1, src);
     strcat(src1, "/");
     char src1_second[1000];
-    strcpy(src_second,"/media/final_testing/2_image_folder");
+    strcpy(src_second,"/dockerx/images");
     strcpy(src1_second, src_second);
     strcat(src1_second, "/");
     strcat(funcName, funcType);

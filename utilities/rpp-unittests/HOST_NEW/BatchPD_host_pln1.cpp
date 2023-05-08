@@ -1324,7 +1324,7 @@ int main(int argc, char **argv)
         Rpp32u flipAxis[images];
         for (i = 0; i < images; i++)
         {
-            flipAxis[i] = 1;
+            flipAxis[i] = 2;
         }
 
         start_omp = omp_get_wtime();
@@ -3471,9 +3471,9 @@ int main(int argc, char **argv)
     count = 0;
     elementsInRowMax = maxWidth * ip_channel;
 
-    for (j = 0; j < noOfImages; j++)
+    for (j = 0; j < 1; j++)
     {
-        int height = dstSize[j].height;
+        int height = dstSize[j].height * 2;
         int width = dstSize[j].width;
 
         int op_size = height * width * ip_channel;

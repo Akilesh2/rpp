@@ -409,8 +409,8 @@ void decode(unsigned char *input_buffer, size_t input_size, unsigned char *outpu
                                   size_t original_image_width, size_t original_image_height,
                                   size_t &actual_decoded_width, size_t &actual_decoded_height)
 {
-    int tjpf = TJPF_RGB;
-    int planes = 3;
+    int tjpf = TJPF_GRAY;
+    int planes = 1;
 
     if (original_image_width < max_decoded_width)
         actual_decoded_width = original_image_width;

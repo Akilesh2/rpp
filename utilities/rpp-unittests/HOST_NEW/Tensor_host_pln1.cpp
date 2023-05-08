@@ -58,7 +58,7 @@ inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector
     for (int i = 0; i < descPtr->n; i++)
     {
         // Read the JPEG compressed data from a file
-        std::string inputImagePath = "/media/final_testing/2_image_folder/"+imageNames[i];
+        std::string inputImagePath = "/dockerx/images/"+imageNames[i];
         std::cerr<<"\ninputImagePath "<<inputImagePath;
         
         FILE* fp = fopen(inputImagePath.c_str(), "rb");
@@ -483,8 +483,8 @@ int main(int argc, char **argv)
 
     dstDescPtr->n = noOfImages;
     dstDescPtr->c = ip_channel;
-    dstDescPtr->h = maxDstHeight;
-    dstDescPtr->w = maxDstWidth;
+    dstDescPtr->h = 400;//maxDstHeight;
+    dstDescPtr->w = 400;//maxDstWidth;
 
     // Optionally set w stride as a multiple of 8 for src/dst
 
@@ -1164,7 +1164,7 @@ int main(int argc, char **argv)
 
         for (i = 0; i < images; i++)
         {
-            dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = 533;
+            dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = 400;
             dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = 400;
         }
 

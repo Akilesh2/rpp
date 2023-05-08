@@ -57,7 +57,7 @@ inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector
     {
         // Read the JPEG compressed data from a file
         // std::string inputImagePath = "/media/akilesh/unittest_script2/1_image_sample/"+ imageNames[i];
-        std::string inputImagePath ="/media/final_testing/2_image_folder/"+ imageNames[i];
+        std::string inputImagePath ="/dockerx/images/"+ imageNames[i];
         
         std::cerr<<"\ninputImagePath "<<inputImagePath<<"\n";
         FILE* fp = fopen(inputImagePath.c_str(), "rb");
@@ -556,14 +556,14 @@ int main(int argc, char **argv)
     srcDescPtr->c = ip_channel;
 
     dstDescPtr->n = noOfImages;
-    dstDescPtr->h = maxDstHeight;
-    dstDescPtr->w = maxDstWidth;
+    dstDescPtr->h = 480;//maxDstHeight;
+    dstDescPtr->w = 400;//maxDstWidth;
     dstDescPtr->c = (pln1OutTypeCase) ? 1 : ip_channel;
 
     // Optionally set w stride as a multiple of 8 for src/dst
 
-    // srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
-    // dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
+    srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
+    dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
 
     // Set n/c/h/w strides for src/dst
 
@@ -1302,7 +1302,7 @@ int main(int argc, char **argv)
         for (i = 0; i < images; i++)
         {
             dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = 400;//roiTensorPtrSrc[i].xywhROI.roiWidth / 1.1;
-            dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = 400;//roiTensorPtrSrc[i].xywhROI.roiHeight / 3;
+            dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = 480;//roiTensorPtrSrc[i].xywhROI.roiHeight / 3;
             // roiTensorPtrDst[i].xywhROI.roiWidth=640;
             // roiTensorPtrDst[i].xywhROI.roiHeight=480;
         }
@@ -2417,7 +2417,7 @@ int main(int argc, char **argv)
 //             output_row += elementsInRowMax;
 //         }
 //         count += dstDescPtr->strides.nStride;
-//         temp_output_row += (100*400*3);
+//         temp_output_row += (100**3);
 //         for (int k = 0; k < height1/2; k++)
 //         {
 //             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
