@@ -58,7 +58,7 @@ inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector
     for (int i = 0; i < descPtr->n; i++)
     {
         // Read the JPEG compressed data from a file
-        std::string inputImagePath = "/dockerx/images/"+imageNames[i];
+        std::string inputImagePath = "/media/trial/rpp_golden/images/"+imageNames[i];
         std::cerr<<"\ninputImagePath "<<inputImagePath;
         
         FILE* fp = fopen(inputImagePath.c_str(), "rb");
@@ -467,6 +467,7 @@ int main(int argc, char **argv)
         count++;
     }
     closedir(dr1);
+    sort(imageNames.begin(),imageNames.end());
 
     // Set numDims, offset, n/c/h/w values for src/dst
 
@@ -483,13 +484,13 @@ int main(int argc, char **argv)
 
     dstDescPtr->n = noOfImages;
     dstDescPtr->c = ip_channel;
-    dstDescPtr->h = 400;//maxDstHeight;
-    dstDescPtr->w = 400;//maxDstWidth;
+    dstDescPtr->h = maxDstHeight;
+    dstDescPtr->w = maxDstWidth;
 
     // Optionally set w stride as a multiple of 8 for src/dst
 
-    srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
-    dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
+    // srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
+    // dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
 
     // Set n/c/h/w strides for src/dst
 
@@ -1389,8 +1390,8 @@ int main(int argc, char **argv)
         {
             roiTensorPtrSrc[i].xywhROI.xy.x = 0;
             roiTensorPtrSrc[i].xywhROI.xy.y = 0;
-            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 100;
-            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 180;
+            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 224;
+            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 224;
         }
 
         // Uncomment to run test case with an ltrbROI override
@@ -1442,16 +1443,16 @@ int main(int argc, char **argv)
         {
             multiplier[i] = multiplierParam;
             offset[i] = offsetParam;
-            mirror[i] = 1;
+            mirror[i] = 0;
         }
 
         // Uncomment to run test case with an xywhROI override
         for (i = 0; i < images; i++)
         {
-            roiTensorPtrSrc[i].xywhROI.xy.x = 50;
-            roiTensorPtrSrc[i].xywhROI.xy.y = 50;
-            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 100;
-            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 100;
+            roiTensorPtrSrc[i].xywhROI.xy.x = 0;
+            roiTensorPtrSrc[i].xywhROI.xy.y = 0;
+            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 224;
+            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 224;
         }
 
         // Uncomment to run test case with an ltrbROI override
@@ -1913,7 +1914,7 @@ int main(int argc, char **argv)
 
     count = 0;
     elementsInRowMax = dstDescPtr->w * ip_channel;
-
+    std::cerr<<"maxHeight "<<maxHeight<<"   "<<maxWidth<<"   "<<elementsInRowMax;
     for (j = 0; j < 1/*dstDescPtr->n*/; j++)
     {
         int height = dstImgSizes[j].height*dstDescPtr->n;
@@ -1926,13 +1927,24 @@ int main(int argc, char **argv)
         Rpp32u elementsInRow = width * dstDescPtr->c;
         Rpp8u *output_row = output + count;
 
-        for (int k = 0; k < height; k++)
+        for (int k = 0; k < height/2; k++)
         {
             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
             temp_output_row += elementsInRow;
-            output_row += elementsInRowMax;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
         }
-        count += dstDescPtr->strides.nStride;
+        count += maxHeight * maxWidth * ip_channel ;
+        output_row = output + count;
+        // count += height * width * ip_channel*2;
+        // output_row = output + count;
+        for (int k = 0; k < height/2; k++)
+        {
+            memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+            temp_output_row += elementsInRow;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        }
 
         char temp[1000];
         strcpy(temp, dst);
@@ -1971,6 +1983,9 @@ int main(int argc, char **argv)
     //     imwrite(temp, mat_op_image);
     //     free(temp_output);
     // }
+   
+
+
     // Free memory
 
     free(roiTensorPtrSrc);

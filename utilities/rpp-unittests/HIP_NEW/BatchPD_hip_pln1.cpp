@@ -38,6 +38,8 @@ THE SOFTWARE.
 #include <iterator>
 #include <hip/hip_runtime_api.h>
 #include "helpers/testSuite_helper.hpp"
+#include "turbojpeg_decoder.hpp"
+#include <turbojpeg.h>
 
 using namespace cv;
 using namespace std;
@@ -506,49 +508,87 @@ int main(int argc, char **argv)
     RppiSize *srcSize = (RppiSize *)calloc(noOfImages, sizeof(RppiSize));
     RppiSize *dstSize = (RppiSize *)calloc(noOfImages, sizeof(RppiSize));
     const int images = noOfImages;
-    char imageNames[images][1000];
+    // char imageNames[images][1000];
+    vector<string> imageNames;
 
     DIR *dr1 = opendir(src);
     while ((de = readdir(dr1)) != NULL)
     {
         if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
             continue;
-        strcpy(imageNames[count], de->d_name);
-        char temp[1000];
-        strcpy(temp, src1);
-        strcat(temp, imageNames[count]);
+        // strcpy(imageNames[count], de->d_name);
+        imageNames.push_back(de->d_name);
+        // char temp[1000];
+        // strcpy(temp, src1);
+        // strcat(temp, imageNames.at(count).c_str());
 
-        image = imread(temp, 0);
+        // image = imread(temp, 1);
 
-        srcSize[count].height = image.rows;
-        srcSize[count].width = image.cols;
-        if (maxHeight < srcSize[count].height)
-            maxHeight = srcSize[count].height;
-        if (maxWidth < srcSize[count].width)
-            maxWidth = srcSize[count].width;
-        if (minHeight > srcSize[count].height)
-            minHeight = srcSize[count].height;
-        if (minWidth > srcSize[count].width)
-            minWidth = srcSize[count].width;
+        // srcSize[count].height = image.rows;
+        // srcSize[count].width = image.cols;
+        // if (maxHeight < srcSize[count].height)
+        //     maxHeight = srcSize[count].height;
+        // if (maxWidth < srcSize[count].width)
+        //     maxWidth = srcSize[count].width;
+        // if (minHeight > srcSize[count].height)
+        //     minHeight = srcSize[count].height;
+        // if (minWidth > srcSize[count].width)
+        //     minWidth = srcSize[count].width;
 
-        dstSize[count].height = image.rows;
-        dstSize[count].width = image.cols;
-        if (maxDstHeight < dstSize[count].height)
-            maxDstHeight = dstSize[count].height;
-        if (maxDstWidth < dstSize[count].width)
-            maxDstWidth = dstSize[count].width;
-        if (minDstHeight > dstSize[count].height)
-            minDstHeight = dstSize[count].height;
-        if (minDstWidth > dstSize[count].width)
-            minDstWidth = dstSize[count].width;
+        // dstSize[count].height = image.rows;
+        // dstSize[count].width = image.cols;
+        // if (maxDstHeight < dstSize[count].height)
+        //     maxDstHeight = dstSize[count].height;
+        // if (maxDstWidth < dstSize[count].width)
+        //     maxDstWidth = dstSize[count].width;
+        // if (minDstHeight > dstSize[count].height)
+        //     minDstHeight = dstSize[count].height;
+        // if (minDstWidth > dstSize[count].width)
+        //     minDstWidth = dstSize[count].width;
 
-        count++;
+        // count++;
     }
     closedir(dr1);
+    std::cerr<<"imageNames "<<imageNames[0]<<"  "<<imageNames[1];
+    sort(imageNames.begin(),imageNames.end());
+    std::cerr<<"After imageNames "<<imageNames[0]<<"  "<<imageNames[1];
+    for (int i=0;i<imageNames.size();i++)
+    {
+        char temp[1000];
+        strcpy(temp, src1);
+        strcat(temp, imageNames.at(i).c_str());
+
+        image = imread(temp, 1);
+
+        srcSize[i].height = image.rows;
+        srcSize[i].width = image.cols;
+        if (maxHeight < srcSize[i].height)
+            maxHeight = srcSize[i].height;
+        if (maxWidth < srcSize[i].width)
+            maxWidth = srcSize[i].width;
+        if (minHeight > srcSize[i].height)
+            minHeight = srcSize[i].height;
+        if (minWidth > srcSize[i].width)
+            minWidth = srcSize[i].width;
+
+        dstSize[i].height = image.rows;
+        dstSize[i].width = image.cols;
+        if (maxDstHeight < dstSize[i].height)
+            maxDstHeight = dstSize[i].height;
+        if (maxDstWidth < dstSize[i].width)
+            maxDstWidth = dstSize[i].width;
+        if (minDstHeight > dstSize[i].height)
+            minDstHeight = dstSize[i].height;
+        if (minDstWidth > dstSize[i].width)
+            minDstWidth = dstSize[i].width;
+
+        // i++;
+    }
 
     ioBufferSize = (unsigned long long)maxHeight * (unsigned long long)maxWidth * (unsigned long long)ip_channel * (unsigned long long)noOfImages;
     oBufferSize = (unsigned long long)maxDstHeight * (unsigned long long)maxDstWidth * (unsigned long long)ip_channel * (unsigned long long)noOfImages;
 
+    Rpp8u *input_compressed = (Rpp8u *)calloc(ioBufferSize, sizeof(Rpp8u));
     Rpp8u *input = (Rpp8u *)calloc(ioBufferSize, sizeof(Rpp8u));
     Rpp8u *input_second = (Rpp8u *)calloc(ioBufferSize, sizeof(Rpp8u));
     Rpp8u *output = (Rpp8u *)calloc(oBufferSize, sizeof(Rpp8u));
@@ -565,42 +605,71 @@ int main(int argc, char **argv)
     i = 0;
     unsigned long long imageDimMax = (unsigned long long)maxHeight * (unsigned long long)maxWidth * (unsigned long long)ip_channel;
     Rpp32u elementsInRowMax = maxWidth * ip_channel;
-
+    initialize();
+    int cc=0;
     while ((de = readdir(dr2)) != NULL)
     {
-        Rpp8u *input_temp, *input_second_temp;
+        // Rpp8u *input_temp, *input_second_temp;
+
+        Rpp8u *input_temp, *input_second_temp, *input_temp_c;
+        // input_temp_c=input;
         input_temp = input + (i * imageDimMax);
+        input_temp_c = input_compressed + (i * imageDimMax);
+
         input_second_temp = input_second + (i * imageDimMax);
         if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
             continue;
 
         char temp[1000];
         strcpy(temp, src1);
-        strcat(temp, de->d_name);
+        // strcat(temp, de->d_name);
+        strcat(temp, imageNames[cc].c_str());
+        cc++;
 
         char temp_second[1000];
         strcpy(temp_second, src1_second);
         strcat(temp_second, de->d_name);
 
-        image = imread(temp, 0);
-        image_second = imread(temp_second, 0);
+        // image = imread(temp, 1);
+        // image_second = imread(temp_second, 1);
 
-        Rpp8u *ip_image = image.data;
-        Rpp8u *ip_image_second = image_second.data;
-        Rpp32u elementsInRow = srcSize[i].width * ip_channel;
-        for (j = 0; j < srcSize[i].height; j++)
-        {
-            memcpy(input_temp, ip_image, elementsInRow * sizeof (Rpp8u));
-            memcpy(input_second_temp, ip_image_second, elementsInRow * sizeof (Rpp8u));
-            ip_image += elementsInRow;
-            ip_image_second += elementsInRow;
-            input_temp += elementsInRowMax;
-            input_second_temp += elementsInRowMax;
-        }
+        // Rpp8u *ip_image = image.data;
+        // Rpp8u *ip_image_second = image_second.data;
+        // Rpp32u elementsInRow = srcSize[i].width * ip_channel;
+        // for (j = 0; j < srcSize[i].height; j++)
+        // {
+        //     memcpy(input_temp, ip_image, elementsInRow * sizeof (Rpp8u));
+        //     memcpy(input_second_temp, ip_image_second, elementsInRow * sizeof (Rpp8u));
+        //     ip_image += elementsInRow;
+        //     ip_image_second += elementsInRow;
+        //     input_temp += elementsInRowMax;
+        //     input_second_temp += elementsInRowMax;
+        // }
+        // std::cerr<<temp;
+        // exit(0);
+
+        size_t file_size = read_data(std::string(temp), input_temp_c);
+                if(file_size == 0)
+                {
+                    std::cerr<<"\n file read failed for image "<<temp;
+                    continue;
+                    // exit(0);
+                }
+                int original_width, original_height, jpeg_sub_samp;
+                // decode_info(input_temp_c, file_size, &original_width, &original_height, &jpeg_sub_samp);
+                tjDecompressHeader2(m_jpegDecompressor, input_temp_c, file_size, &original_width, &original_height, &jpeg_sub_samp);
+
+                size_t scaledw, scaledh;
+                decode(input_temp_c, file_size, input_temp, maxWidth, maxHeight, original_width, original_height, scaledw, scaledh);
+                srcSize[i].width = scaledw;
+                srcSize[i].height = scaledh;
+                dstSize[i].width = scaledw;
+                dstSize[i].height = scaledh;
         i++;
         count += imageDimMax;
     }
     closedir(dr2);
+
 
     Rpp16f *inputf16, *inputf16_second, *outputf16;
     Rpp32f *inputf32, *inputf32_second, *outputf32;
@@ -1410,12 +1479,12 @@ int main(int argc, char **argv)
         Rpp32u y2[images];
         for (i = 0; i < images; i++)
         {
-            x1[i] = 0;
-            y1[i] = 0;
-            x2[i] = 50;
-            y2[i] = 50;
-            dstSize[i].height = srcSize[i].height / 3;
-            dstSize[i].width = srcSize[i].width / 1.1;
+            x1[i] = 202;
+            y1[i] = 91;
+            x2[i] = 505;
+            y2[i] = 343;
+            dstSize[i].height = srcSize[i].height;//srcSize[i].height / 3;
+            dstSize[i].width = srcSize[i].width;//srcSize[i].width / 1.1;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -2029,10 +2098,10 @@ int main(int argc, char **argv)
         {
             x1[i] = 0;
             y1[i] = 0;
-            x2[i] = 50;
-            y2[i] = 50;
-            dstSize[i].height = srcSize[i].height / 3;
-            dstSize[i].width = srcSize[i].width / 1.1;
+            x2[i] = 200;
+            y2[i] = 200;
+            dstSize[i].height = 400;//srcSize[i].height / 3;
+            dstSize[i].width = 400;//srcSize[i].width / 1.1;
             if (maxDstHeight < dstSize[i].height)
                 maxDstHeight = dstSize[i].height;
             if (maxDstWidth < dstSize[i].width)
@@ -3135,33 +3204,46 @@ int main(int argc, char **argv)
     count = 0;
     elementsInRowMax = maxWidth * ip_channel;
 
-    for (j = 0; j < noOfImages; j++)
+for (j = 0; j < 1/*dstDescPtr->n*/; j++)
     {
-        int height = dstSize[j].height;
+        int height = dstSize[j].height*2;
         int width = dstSize[j].width;
 
-        int op_size = height * width * ip_channel;
+        int op_size = height * width * 2;
         Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
         Rpp8u *temp_output_row;
         temp_output_row = temp_output;
-        Rpp32u elementsInRow = width * ip_channel;
+        Rpp32u elementsInRow = width * 1;
         Rpp8u *output_row = output + count;
 
-        for (int k = 0; k < height; k++)
+        for (int k = 0; k < height/2; k++)
         {
             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
             temp_output_row += elementsInRow;
-            output_row += elementsInRowMax;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
         }
-        count += maxHeight * maxWidth * ip_channel;
+        count += maxHeight * maxWidth * ip_channel ;
+        output_row = output + count;
+        // count += height * width * ip_channel*2;
+        // output_row = output + count;
+        for (int k = 0; k < height/2; k++)
+        {
+            memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+            temp_output_row += elementsInRow;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        }
 
         char temp[1000];
         strcpy(temp, dst);
-        strcat(temp, imageNames[j]);
+        strcat(temp, "sample.png");
 
-        Mat mat_op_image;
+        Mat mat_op_image,mat_color;
         mat_op_image = Mat(height, width, CV_8UC1, temp_output);
-        imwrite(temp, mat_op_image);
+        cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
+
+        imwrite(temp, mat_color);
 
         free(temp_output);
     }

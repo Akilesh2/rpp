@@ -20,8 +20,8 @@ cwd=$(pwd)
 # DEFAULT_SRC_FOLDER_1="$cwd/../TEST_IMAGES/three_images_224x224_src1"
 # DEFAULT_SRC_FOLDER_2="$cwd/../TEST_IMAGES/three_images_224x224_src2"
 
-DEFAULT_SRC_FOLDER_1="/dockerx/images"
-DEFAULT_SRC_FOLDER_2="/dockerx/images"
+DEFAULT_SRC_FOLDER_1="/media/trial/rpp_golden/images"
+DEFAULT_SRC_FOLDER_2="/media/trial/rpp_golden/images"
 # /home/sloganat/WORKSPACE/akilesh/unittest_script/2_image_folder
 # Input Images - Two images (mixed size)
 # DEFAULT_SRC_FOLDER_1="$cwd/../TEST_IMAGES/two_images_mixed_src1"
@@ -277,7 +277,7 @@ do
             fi
 
             printf "\n# ./BatchPD_host_pln1 $SRC_FOLDER_1_TEMP $SRC_FOLDER_2_TEMP $DST_FOLDER_TEMP $bitDepth $outputFormatToggle $case 0"
-            # ./BatchPD_host_pln1 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
+            ./BatchPD_host_pln1 "$SRC_FOLDER_1_TEMP" "$SRC_FOLDER_2_TEMP" "$DST_FOLDER_TEMP" "$bitDepth" "$outputFormatToggle" "$case" "0"
 
             if [ "$case" -eq 8 ]
             then

@@ -55,7 +55,7 @@ inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector
     for (int i = 0; i < descPtr->n; i++)
     {
         // Read the JPEG compressed data from a file
-        std::string inputImagePath = "/media/final_testing/2_image_folder/"+imageNames[i];
+        std::string inputImagePath = "/media/trial/rpp_golden/images/"+imageNames[i];
         std::cerr<<"\ninputImagePath "<<inputImagePath;
         
         FILE* fp = fopen(inputImagePath.c_str(), "rb");
@@ -497,6 +497,8 @@ int main(int argc, char **argv)
         count++;
     }
     closedir(dr1);
+    sort(imageNames.begin(),imageNames.end());
+
 
     // Set numDims, offset, n/c/h/w values, n/c/h/w strides for src/dst
 
@@ -518,8 +520,8 @@ int main(int argc, char **argv)
 
     // Optionally set w stride as a multiple of 8 for src/dst
 
-    srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
-    dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
+    // srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
+    // dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
 
     // Set n/c/h/w strides for src/dst
 
@@ -1552,8 +1554,8 @@ int main(int argc, char **argv)
         {
             roiTensorPtrSrc[i].xywhROI.xy.x = 0;
             roiTensorPtrSrc[i].xywhROI.xy.y = 0;
-            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 100;
-            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 180;
+            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 224;
+            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 224;
         }
 
         // Uncomment to run test case with an ltrbROI override
@@ -2224,6 +2226,38 @@ int main(int argc, char **argv)
     offsetted_output = output + dstDescPtr->offsetInBytes;
     
     std::cerr<<"\ncheck brfore dumping";
+    // for (j = 0; j < 1/*dstDescPtr->n*/; j++)
+    // {
+    //     int height = dstImgSizes[j].height*dstDescPtr->n;
+    //     int width = dstImgSizes[j].width;
+
+    //     int op_size = height * width * dstDescPtr->c*dstDescPtr->n;
+    //     Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
+    //     Rpp8u *temp_output_row;
+    //     temp_output_row = temp_output;
+    //     Rpp32u elementsInRow = width * dstDescPtr->c;
+    //     Rpp8u *output_row = output + count;
+
+    //     for (int k = 0; k < height; k++)
+    //     {
+    //         memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+    //         temp_output_row += elementsInRow;
+    //         output_row += elementsInRowMax;
+    //     }
+    //     count += dstDescPtr->strides.nStride;
+
+    //     char temp[1000];
+    //     strcpy(temp, dst);
+    //     strcat(temp, "sample.png");
+
+    //     Mat mat_op_image,mat_color;
+    //     mat_op_image = Mat(height, width, CV_8UC1, temp_output);
+    //     cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
+
+    //     imwrite(temp, mat_color);
+
+    //     free(temp_output);
+    // }
     for (j = 0; j < 1/*dstDescPtr->n*/; j++)
     {
         int height = dstImgSizes[j].height*dstDescPtr->n;
@@ -2236,13 +2270,24 @@ int main(int argc, char **argv)
         Rpp32u elementsInRow = width * dstDescPtr->c;
         Rpp8u *output_row = output + count;
 
-        for (int k = 0; k < height; k++)
+        for (int k = 0; k < height/2; k++)
         {
             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
             temp_output_row += elementsInRow;
-            output_row += elementsInRowMax;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
         }
-        count += dstDescPtr->strides.nStride;
+        count += maxHeight * maxWidth * ip_channel ;
+        output_row = output + count;
+        // count += height * width * ip_channel*2;
+        // output_row = output + count;
+        for (int k = 0; k < height/2; k++)
+        {
+            memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+            temp_output_row += elementsInRow;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        }
 
         char temp[1000];
         strcpy(temp, dst);
@@ -2256,7 +2301,6 @@ int main(int argc, char **argv)
 
         free(temp_output);
     }
-
     hipHostFree(roiTensorPtrSrc);
     hipHostFree(roiTensorPtrDst);
     hipHostFree(srcImgSizes);
