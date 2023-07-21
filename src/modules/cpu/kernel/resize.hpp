@@ -41,7 +41,7 @@ RppStatus resize_nn_u8_u8_host_tensor(Rpp8u *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -262,7 +262,7 @@ RppStatus resize_nn_f32_f32_host_tensor(Rpp32f *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -475,7 +475,7 @@ RppStatus resize_nn_i8_i8_host_tensor(Rpp8s *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -696,7 +696,7 @@ RppStatus resize_nn_f16_f16_host_tensor(Rpp16f *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -806,7 +806,7 @@ RppStatus resize_bilinear_u8_u8_host_tensor(Rpp8u *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -1047,7 +1047,7 @@ RppStatus resize_bilinear_f32_f32_host_tensor(Rpp32f *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -1290,7 +1290,7 @@ RppStatus resize_bilinear_f16_f16_host_tensor(Rpp16f *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -1534,7 +1534,7 @@ RppStatus resize_bilinear_i8_i8_host_tensor(Rpp8s *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;
@@ -1780,7 +1780,7 @@ RppStatus resize_separable_host_tensor(T *srcPtr,
     Rpp32u numThreads = handle.GetNumThreads();
 
     omp_set_dynamic(0);
-#pragma omp parallel for num_threads(numThreads)
+#pragma omp parallel for num_threads(1)
     for(int batchCount = 0; batchCount < dstDescPtr->n; batchCount++)
     {
         RpptROI roi;

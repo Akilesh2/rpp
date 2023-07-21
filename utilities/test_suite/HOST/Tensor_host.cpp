@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include <half/half.hpp>
 #include <fstream>
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 
 using namespace cv;
 using namespace std;

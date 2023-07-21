@@ -36,6 +36,8 @@ THE SOFTWARE.
 #include <hip/hip_fp16.h>
 #include <fstream>
 #include "helpers/testSuite_helper.hpp"
+#include <turbojpeg.h>
+#include "turbojpeg_decoder.hpp"
 
 using namespace cv;
 using namespace std;
@@ -43,6 +45,157 @@ using namespace std;
 #define RPPPIXELCHECK(pixel) (pixel < (Rpp32f)0) ? ((Rpp32f)0) : ((pixel < (Rpp32f)255) ? pixel : ((Rpp32f)255))
 #define RPPMAX2(a,b) ((a > b) ? a : b)
 #define RPPMIN2(a,b) ((a < b) ? a : b)
+
+// inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector<string> imageNames)
+// {
+//     tjhandle tjInstance = tjInitDecompress();
+
+//     // Loop through the input images
+//     std::cerr<<"\nimageNames size "<<imageNames.size();
+//     for (int i = 0; i < descPtr->n; i++)
+//     {
+//         // Read the JPEG compressed data from a file
+//         std::string inputImagePath = "/media/trial/rpp_golden/images/"+imageNames[i];
+//         std::cerr<<"\ninputImagePath "<<inputImagePath;
+        
+//         FILE* fp = fopen(inputImagePath.c_str(), "rb");
+//         fseek(fp, 0, SEEK_END);
+//         long jpegSize = ftell(fp);
+//         // rewind(fp);
+//         fseek(fp, 0 , SEEK_SET);// Take the file pointer back to the start
+
+//         unsigned char* jpegBuf = (unsigned char*)malloc(jpegSize);
+//         fread(jpegBuf, 1, jpegSize, fp);
+//         fclose(fp);
+//         std::cerr<<"\ninputImagePath "<<inputImagePath;
+//         // Decompress the JPEG data into an RGB image buffer
+//         int width, height, subsamp, color_space;
+//         // tjDecompressHeader3(tjInstance, jpegBuf, jpegSize, &width, &height, &subsamp, &color_space);
+//         tjDecompressHeader2(tjInstance, jpegBuf, jpegSize, &width, &height, &subsamp);
+//         std::cerr<<"\nwidth, height "<<width<<"  "<<height;
+//         Rpp8u* rgbBuf;
+//         int elementsInRow;
+//         if(descPtr->c == 3)
+//         {
+//             elementsInRow = width * descPtr->c;
+//             rgbBuf= (Rpp8u*)malloc(width * height * 3);
+//             // tjDecompress2(tjInstance, jpegBuf, jpegSize, rgbBuf, width, 0, height, TJPF_RGB, 0);
+//             tjDecompress2(tjInstance, jpegBuf, jpegSize, rgbBuf, width, width * 3, height, TJPF_RGB, 0);
+
+//         }
+//         else
+//         {
+//             elementsInRow = width;
+//             rgbBuf= (Rpp8u*)malloc(width * height);
+//             tjDecompress2(tjInstance, jpegBuf, jpegSize, rgbBuf, width, 0, height, TJPF_GRAY, TJFLAG_ACCURATEDCT);
+//         }
+//         // Copy the decompressed image buffer to the RPP input buffer
+//         Rpp8u *inputTemp = input + (i * descPtr->strides.nStride);
+//         for (int j = 0; j < height; j++)
+//         {
+//             memcpy(inputTemp, rgbBuf + j * elementsInRow, elementsInRow * sizeof(Rpp8u));
+//             inputTemp += descPtr->w * descPtr->c;
+//         }
+//         // Clean up
+//         free(jpegBuf);
+//         free(rgbBuf);
+//     }
+
+//     // Clean up
+//     tjDestroy(tjInstance);
+// }
+inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, vector<string> imageNames)
+{
+    // tjhandle tjInstance = tjInitDecompress();
+    tjhandle m_jpegDecompressor =tjInitDecompress();
+
+    // Loop through the input images
+    std::cerr<<"  \n\ndescPtr->n "<< descPtr->n;
+    for (int i = 0; i < descPtr->n; i++)
+    {
+        // Read the JPEG compressed data from a file
+        // std::string inputImagePath = "/media/akilesh/unittest_script2/1_image_sample/"+ imageNames[i];
+        std::string inputImagePath ="/media/trial/rpp_golden/images/"+ imageNames[i];
+        
+        std::cerr<<"\ninputImagePath "<<inputImagePath<<"\n";
+        FILE* fp = fopen(inputImagePath.c_str(), "rb");
+        if(!fp) {
+        std::cerr << "POINTER null";
+        // return 0;
+    }
+        fseek(fp, 0, SEEK_END);
+        long jpegSize = ftell(fp);
+        rewind(fp);
+        unsigned char* jpegBuf = (unsigned char*)malloc(jpegSize);
+        fread(jpegBuf, 1, jpegSize, fp);
+        fclose(fp);
+
+        // Decompress the JPEG data into an RGB image buffer
+        int width, height, subsamp, color_space;
+        // tjDecompressHeader3(m_jpegDecompressor, jpegBuf, jpegSize, &width, &height, &subsamp, &color_space);
+        if(tjDecompressHeader2(m_jpegDecompressor,
+                        jpegBuf, 
+                        jpegSize, 
+                        &width, 
+                        &height, 
+                        &color_space) != 0)
+        
+        {
+            // ignore "Could not determine Subsampling type error"
+            if ( STR(tjGetErrorStr2(m_jpegDecompressor)).find("Could not determine subsampling type for JPEG image") == std::string::npos) {
+                // WRN("Jpeg header decode failed " + STR(tjGetErrorStr2(m_jpegDecompressor)))
+                // return Status::HEADER_DECODE_FAILED;
+                std::cerr<<"\n Decode failed IN tjDecompressHeader2";
+                exit(0);
+
+            }
+        }
+
+        Rpp8u* rgbBuf;
+        int elementsInRow;
+        if(descPtr->c == 3)
+        {
+            elementsInRow = width * descPtr->c;
+            rgbBuf= (Rpp8u*)malloc(width * height * 3);
+            // tjDecompress2(tjInstance, jpegBuf, jpegSize, rgbBuf, width, 0, height, TJPF_BGR, 0);
+            if(tjDecompress2(m_jpegDecompressor,
+                            jpegBuf,
+                            jpegSize,
+                            rgbBuf,
+                            width,
+                            width * 3,
+                            height,
+                            TJPF_RGB,
+                            TJFLAG_ACCURATEDCT) != 0) {
+                // WRN("KO::Jpeg image decode failed " + STR(tjGetErrorStr2(m_jpegDecompressor)))
+                // return Status::CONTENT_DECODE_FAILED;
+                std::cerr<<"\n Decode failed";
+                exit(0);
+            }
+        }
+        else
+        {
+            elementsInRow = width;
+            rgbBuf= (Rpp8u*)malloc(width * height);
+            tjDecompress2(m_jpegDecompressor, jpegBuf, jpegSize, rgbBuf, width, 0, height, TJPF_GRAY, 0);
+        }
+        // Copy the decompressed image buffer to the RPP input buffer
+        Rpp8u *inputTemp = input + (i * descPtr->strides.nStride);
+        for (int j = 0; j < height; j++)
+        {
+            memcpy(inputTemp, rgbBuf + j * elementsInRow, elementsInRow * sizeof(Rpp8u));
+            inputTemp += descPtr->w * descPtr->c;
+        }
+        // Clean up
+        free(jpegBuf);
+        free(rgbBuf);
+    }
+
+    // Clean up
+    // tjDestroy(tjInstance);
+    std::cerr<<"\n IMAGES READ SUCCESSFULLY";
+    tjDestroy(m_jpegDecompressor);
+}
 
 std::string get_interpolation_type(unsigned int val, RpptInterpolationType &interpolationType)
 {
@@ -155,7 +308,7 @@ int main(int argc, char **argv)
         break;
     case 2:
         strcpy(funcName, "blend");
-        outputFormatToggle = 0;
+        // outputFormatToggle = 0;
         break;
     case 4:
         strcpy(funcName, "contrast");
@@ -179,7 +332,7 @@ int main(int argc, char **argv)
         break;
     case 23:
         strcpy(funcName, "rotate");
-        outputFormatToggle = 0;
+        // outputFormatToggle = 0;
         break;
     case 24:
         strcpy(funcName, "warp_affine");
@@ -399,43 +552,112 @@ int main(int argc, char **argv)
     // Set maxHeight, maxWidth and ROIs for src/dst
 
     const int images = noOfImages;
-    char imageNames[images][1000];
+    vector<string> imageNames;
 
     DIR *dr1 = opendir(src);
+    int hx = 0;
+    // while ((de = readdir(dr1)) != NULL)
+    // {
+    //     if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
+    //         continue;
+    //     imageNames.push_back(de->d_name);
+    //     char temp[1000];
+    //     strcpy(temp, src1);
+    //     strcat(temp, imageNames.at(hx).c_str());
+
+    //     image = imread(temp, 0);
+
+    //     roiTensorPtrSrc[hx].xywhROI.xy.x = 0;
+    //     roiTensorPtrSrc[hx].xywhROI.xy.y = 0;
+    //     roiTensorPtrSrc[hx].xywhROI.roiWidth = image.cols;
+    //     roiTensorPtrSrc[hx].xywhROI.roiHeight = image.rows;
+
+    //     roiTensorPtrDst[hx].xywhROI.xy.x = 0;
+    //     roiTensorPtrDst[hx].xywhROI.xy.y = 0;
+    //     roiTensorPtrDst[hx].xywhROI.roiWidth = image.cols;
+    //     roiTensorPtrDst[hx].xywhROI.roiHeight = image.rows;
+
+    //     srcImgSizes[hx].width = roiTensorPtrSrc[hx].xywhROI.roiWidth;
+    //     srcImgSizes[hx].height = roiTensorPtrSrc[hx].xywhROI.roiHeight;
+    //     dstImgSizes[hx].width = roiTensorPtrDst[hx].xywhROI.roiWidth;
+    //     dstImgSizes[hx].height = roiTensorPtrDst[hx].xywhROI.roiHeight;
+
+    //     maxHeight = RPPMAX2(maxHeight, roiTensorPtrSrc[hx].xywhROI.roiHeight);
+    //     maxWidth = RPPMAX2(maxWidth, roiTensorPtrSrc[hx].xywhROI.roiWidth);
+    //     maxDstHeight = RPPMAX2(maxDstHeight, roiTensorPtrDst[hx].xywhROI.roiHeight);
+    //     maxDstWidth = RPPMAX2(maxDstWidth, roiTensorPtrDst[hx].xywhROI.roiWidth);
+    //     hx++;
+    //     count++;
+    // }
+    // closedir(dr1);
+    // sort(imageNames.begin(),imageNames.end());
     while ((de = readdir(dr1)) != NULL)
     {
         if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
             continue;
-        strcpy(imageNames[count], de->d_name);
-        char temp[1000];
-        strcpy(temp, src1);
-        strcat(temp, imageNames[count]);
+        imageNames.push_back(de->d_name);
+        
+        // strcpy(imageNames[count], de->d_name);
+        // char temp[1000];
+        // strcpy(temp, src1);
+        // strcat(temp, imageNames[count]);
 
-        image = imread(temp, 0);
+        // image = imread(temp, 1);
 
-        roiTensorPtrSrc[count].xywhROI.xy.x = 0;
-        roiTensorPtrSrc[count].xywhROI.xy.y = 0;
-        roiTensorPtrSrc[count].xywhROI.roiWidth = image.cols;
-        roiTensorPtrSrc[count].xywhROI.roiHeight = image.rows;
+        // roiTensorPtrSrc[count].xywhROI.xy.x = 0;
+        // roiTensorPtrSrc[count].xywhROI.xy.y = 0;
+        // roiTensorPtrSrc[count].xywhROI.roiWidth = image.cols;
+        // roiTensorPtrSrc[count].xywhROI.roiHeight = image.rows;
 
-        roiTensorPtrDst[count].xywhROI.xy.x = 0;
-        roiTensorPtrDst[count].xywhROI.xy.y = 0;
-        roiTensorPtrDst[count].xywhROI.roiWidth = image.cols;
-        roiTensorPtrDst[count].xywhROI.roiHeight = image.rows;
+        // roiTensorPtrDst[count].xywhROI.xy.x = 0;
+        // roiTensorPtrDst[count].xywhROI.xy.y = 0;
+        // roiTensorPtrDst[count].xywhROI.roiWidth = image.cols;
+        // roiTensorPtrDst[count].xywhROI.roiHeight = image.rows;
 
-        srcImgSizes[count].width = roiTensorPtrSrc[count].xywhROI.roiWidth;
-        srcImgSizes[count].height = roiTensorPtrSrc[count].xywhROI.roiHeight;
-        dstImgSizes[count].width = roiTensorPtrDst[count].xywhROI.roiWidth;
-        dstImgSizes[count].height = roiTensorPtrDst[count].xywhROI.roiHeight;
+        // srcImgSizes[count].width = roiTensorPtrSrc[count].xywhROI.roiWidth;
+        // srcImgSizes[count].height = roiTensorPtrSrc[count].xywhROI.roiHeight;
+        // dstImgSizes[count].width = roiTensorPtrDst[count].xywhROI.roiWidth;
+        // dstImgSizes[count].height = roiTensorPtrDst[count].xywhROI.roiHeight;
 
-        maxHeight = RPPMAX2(maxHeight, roiTensorPtrSrc[count].xywhROI.roiHeight);
-        maxWidth = RPPMAX2(maxWidth, roiTensorPtrSrc[count].xywhROI.roiWidth);
-        maxDstHeight = RPPMAX2(maxDstHeight, roiTensorPtrDst[count].xywhROI.roiHeight);
-        maxDstWidth = RPPMAX2(maxDstWidth, roiTensorPtrDst[count].xywhROI.roiWidth);
+        // maxHeight = RPPMAX2(maxHeight, roiTensorPtrSrc[count].xywhROI.roiHeight);
+        // maxWidth = RPPMAX2(maxWidth, roiTensorPtrSrc[count].xywhROI.roiWidth);
+        // maxDstHeight = RPPMAX2(maxDstHeight, roiTensorPtrDst[count].xywhROI.roiHeight);
+        // maxDstWidth = RPPMAX2(maxDstWidth, roiTensorPtrDst[count].xywhROI.roiWidth);
 
-        count++;
+        // count++;
     }
     closedir(dr1);
+    sort(imageNames.begin(),imageNames.end());
+    // Set numDims, offset, n/c/h/w values for src/dst
+    for (int i=0;i<imageNames.size();i++)
+    {
+        char temp[1000];
+        strcpy(temp, src1);
+        strcat(temp, imageNames.at(i).c_str());
+         image = imread(temp, 1);
+
+        roiTensorPtrSrc[i].xywhROI.xy.x = 0;
+        roiTensorPtrSrc[i].xywhROI.xy.y = 0;
+        roiTensorPtrSrc[i].xywhROI.roiWidth = image.cols;
+        roiTensorPtrSrc[i].xywhROI.roiHeight = image.rows;
+
+        roiTensorPtrDst[i].xywhROI.xy.x = 0;
+        roiTensorPtrDst[i].xywhROI.xy.y = 0;
+        roiTensorPtrDst[i].xywhROI.roiWidth = image.cols;
+        roiTensorPtrDst[i].xywhROI.roiHeight = image.rows;
+
+        srcImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth;
+        srcImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight;
+        dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth;
+        dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight;
+
+        maxHeight = RPPMAX2(maxHeight, roiTensorPtrSrc[i].xywhROI.roiHeight);
+        maxWidth = RPPMAX2(maxWidth, roiTensorPtrSrc[i].xywhROI.roiWidth);
+        maxDstHeight = RPPMAX2(maxDstHeight, roiTensorPtrDst[i].xywhROI.roiHeight);
+        maxDstWidth = RPPMAX2(maxDstWidth, roiTensorPtrDst[i].xywhROI.roiWidth);
+
+    }
+
 
     // Set numDims, offset, n/c/h/w values, n/c/h/w strides for src/dst
 
@@ -457,8 +679,8 @@ int main(int argc, char **argv)
 
     // Optionally set w stride as a multiple of 8 for src/dst
 
-    srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
-    dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
+    // srcDescPtr->w = ((srcDescPtr->w / 8) * 8) + 8;
+    // dstDescPtr->w = ((dstDescPtr->w / 8) * 8) + 8;
 
     // Set n/c/h/w strides for src/dst
 
@@ -502,8 +724,18 @@ int main(int argc, char **argv)
 
     Rpp8u *input = (Rpp8u *)calloc(ioBufferSizeInBytes_u8, 1);
     Rpp8u *input_second = (Rpp8u *)calloc(ioBufferSizeInBytes_u8, 1);
+    Rpp8u *input_third = (Rpp8u *)calloc(ioBufferSizeInBytes_u8, 1);
+
     Rpp8u *output = (Rpp8u *)calloc(oBufferSizeInBytes_u8, 1);
     if (test_case == 40) memset(input, 0xFF, ioBufferSizeInBytes_u8);
+    
+    Rpp8u *offsetted_input, *offsetted_input_second, *offsetted_input_third;
+    offsetted_input = input + srcDescPtr->offsetInBytes;
+    offsetted_input_second = input_second + srcDescPtr->offsetInBytes;
+    offsetted_input_third = input_third + srcDescPtr->offsetInBytes;
+
+
+    Rpp32u elementsInRowMax = srcDescPtr->w * ip_channel;
 
     // Set 8u host buffers for src/dst
 
@@ -511,62 +743,63 @@ int main(int argc, char **argv)
     DIR *dr2_second = opendir(src_second);
     count = 0;
     i = 0;
+    initialize();
+    int cc=0;
+        Rpp8u *ip_image ;
+        std::cerr<<"\n\n before reading image 1 ";
 
-    Rpp8u *offsetted_input, *offsetted_input_second;
-    offsetted_input = input + srcDescPtr->offsetInBytes;
-    offsetted_input_second = input_second + srcDescPtr->offsetInBytes;
+        read_image_batch_turbojpeg(offsetted_input, srcDescPtr, imageNames);
+        std::cerr<<"\n\n after reading image 1 ";
 
-    Rpp32u elementsInRowMax = srcDescPtr->w * ip_channel;
+    // while ((de = readdir(dr2)) != NULL)
+    // {
+    //     Rpp8u *input_temp, *input_second_temp;
+    //     input_temp = offsetted_input + (i * srcDescPtr->strides.nStride);
+    //     input_second_temp = offsetted_input_second + (i * srcDescPtr->strides.nStride);
 
-    while ((de = readdir(dr2)) != NULL)
-    {
-        Rpp8u *input_temp, *input_second_temp;
-        input_temp = offsetted_input + (i * srcDescPtr->strides.nStride);
-        input_second_temp = offsetted_input_second + (i * srcDescPtr->strides.nStride);
+    //     if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
+    //         continue;
 
-        if (strcmp(de->d_name, ".") == 0 || strcmp(de->d_name, "..") == 0)
-            continue;
+    //     char temp[1000];
+    //     strcpy(temp, src1);
+    //     strcat(temp, de->d_name);
 
-        char temp[1000];
-        strcpy(temp, src1);
-        strcat(temp, de->d_name);
+    //     char temp_second[1000];
+    //     strcpy(temp_second, src1_second);
+    //     strcat(temp_second, de->d_name);
 
-        char temp_second[1000];
-        strcpy(temp_second, src1_second);
-        strcat(temp_second, de->d_name);
+    //     image = imread(temp, 0);
+    //     image_second = imread(temp_second, 0);
 
-        image = imread(temp, 0);
-        image_second = imread(temp_second, 0);
+    //     Rpp8u *ip_image = image.data;
+    //     Rpp8u *ip_image_second = image_second.data;
 
-        Rpp8u *ip_image = image.data;
-        Rpp8u *ip_image_second = image_second.data;
+    //     Rpp32u elementsInRow = roiTensorPtrSrc[i].xywhROI.roiWidth * ip_channel;
 
-        Rpp32u elementsInRow = roiTensorPtrSrc[i].xywhROI.roiWidth * ip_channel;
-
-        for (j = 0; j < roiTensorPtrSrc[i].xywhROI.roiHeight; j++)
-        {
-            memcpy(input_temp, ip_image, elementsInRow * sizeof (Rpp8u));
-            memcpy(input_second_temp, ip_image_second, elementsInRow * sizeof (Rpp8u));
-            ip_image += elementsInRow;
-            ip_image_second += elementsInRow;
-            input_temp += elementsInRowMax;
-            input_second_temp += elementsInRowMax;
-        }
-        i++;
-        count += srcDescPtr->strides.nStride;
-    }
-    closedir(dr2);
+    //     for (j = 0; j < roiTensorPtrSrc[i].xywhROI.roiHeight; j++)
+    //     {
+    //         memcpy(input_temp, ip_image, elementsInRow * sizeof (Rpp8u));
+    //         memcpy(input_second_temp, ip_image_second, elementsInRow * sizeof (Rpp8u));
+    //         ip_image += elementsInRow;
+    //         ip_image_second += elementsInRow;
+    //         input_temp += elementsInRowMax;
+    //         input_second_temp += elementsInRowMax;
+    //     }
+    //     i++;
+    //     count += srcDescPtr->strides.nStride;
+    // }
+    // closedir(dr2);
 
     // Convert inputs to test various other bit depths and copy to hip buffers
 
     half *inputf16, *inputf16_second, *outputf16;
     Rpp32f *inputf32, *inputf32_second, *outputf32;
     Rpp8s *inputi8, *inputi8_second, *outputi8;
-    int *d_input, *d_input_second, *d_inputf16, *d_inputf16_second, *d_inputf32, *d_inputf32_second, *d_inputi8, *d_inputi8_second;
+    int *d_input, *d_input_second, *d_inputf16, *d_inputf16_second, *d_inputf32, *d_inputf32_second, *d_inputi8, *d_inputi8_second, *d_input_third;
     int *d_output, *d_outputf16, *d_outputf32, *d_outputi8;
 
     // Factors to convert U8 data to F32, F16 data to 0-1 range and reconvert them back to 0 -255 range
-
+    std::cerr<<"\n checking 1";
     Rpp32f conversionFactor = 1.0f / 255.0;
     if(test_case == 38)
         conversionFactor = 1.0;
@@ -574,12 +807,19 @@ int main(int argc, char **argv)
 
     if (ip_bitDepth == 0)
     {
+        std::cerr<<"\n checking bitdepth 1";
         hipMalloc(&d_input, ioBufferSizeInBytes_u8);
         hipMalloc(&d_input_second, ioBufferSizeInBytes_u8);
+        hipMalloc(&d_input_third, ioBufferSizeInBytes_u8);
+
         hipMalloc(&d_output, oBufferSizeInBytes_u8);
         hipMemcpy(d_input, input, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
         hipMemcpy(d_input_second, input_second, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+        hipMemcpy(d_input_third, input_third, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+
         hipMemcpy(d_output, output, oBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+        std::cerr<<"\n end checking bitdepth 1";
+
     }
     else if (ip_bitDepth == 1)
     {
@@ -650,9 +890,13 @@ int main(int argc, char **argv)
         outputf16 = (half *)calloc(oBufferSizeInBytes_f16, 1);
         hipMalloc(&d_input, ioBufferSizeInBytes_u8);
         hipMalloc(&d_input_second, ioBufferSizeInBytes_u8);
+        hipMalloc(&d_input_third, ioBufferSizeInBytes_u8);
+
         hipMalloc(&d_outputf16, oBufferSizeInBytes_f16);
         hipMemcpy(d_input, input, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
         hipMemcpy(d_input_second, input_second, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+        hipMemcpy(d_input_third, input_third, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+
         hipMemcpy(d_outputf16, outputf16, oBufferSizeInBytes_f16, hipMemcpyHostToDevice);
     }
     else if (ip_bitDepth == 4)
@@ -660,9 +904,13 @@ int main(int argc, char **argv)
         outputf32 = (Rpp32f *)calloc(oBufferSizeInBytes_f32, 1);
         hipMalloc(&d_input, ioBufferSizeInBytes_u8);
         hipMalloc(&d_input_second, ioBufferSizeInBytes_u8);
+        hipMalloc(&d_input_third, ioBufferSizeInBytes_u8);
+
         hipMalloc(&d_outputf32, oBufferSizeInBytes_f32);
         hipMemcpy(d_input, input, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
         hipMemcpy(d_input_second, input_second, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+        hipMemcpy(d_input_third, input_third, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+
         hipMemcpy(d_outputf32, outputf32, oBufferSizeInBytes_f32, hipMemcpyHostToDevice);
     }
     else if (ip_bitDepth == 5)
@@ -702,14 +950,18 @@ int main(int argc, char **argv)
         outputi8 = (Rpp8s *)calloc(oBufferSizeInBytes_i8, 1);
         hipMalloc(&d_input, ioBufferSizeInBytes_u8);
         hipMalloc(&d_input_second, ioBufferSizeInBytes_u8);
+        hipMalloc(&d_input_third, ioBufferSizeInBytes_u8);
+
         hipMalloc(&d_outputi8, oBufferSizeInBytes_i8);
         hipMemcpy(d_input, input, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
         hipMemcpy(d_input_second, input_second, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+        hipMemcpy(d_input_third, input_third, ioBufferSizeInBytes_u8, hipMemcpyHostToDevice);
+
         hipMemcpy(d_outputi8, outputi8, oBufferSizeInBytes_i8, hipMemcpyHostToDevice);
     }
 
     // Run case-wise RPP API and measure time
-
+    std::cerr<<"\nafter melloc ";
     rppHandle_t handle;
     hipStream_t stream;
     hipStreamCreate(&stream);
@@ -730,8 +982,8 @@ int main(int argc, char **argv)
         Rpp32f beta[images];
         for (i = 0; i < images; i++)
         {
-            alpha[i] = 1.75;
-            beta[i] = 50;
+            alpha[i] = 1.90;
+            beta[i] = 20;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -784,7 +1036,7 @@ int main(int argc, char **argv)
         Rpp32f gammaVal[images];
         for (i = 0; i < images; i++)
         {
-            gammaVal[i] = 1.9;
+            gammaVal[i] = 0.5;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -834,10 +1086,28 @@ int main(int argc, char **argv)
     {
         test_case_name = "blend";
 
+        // Rpp32f alpha[images];
+        // for (i = 0; i < images; i++)
+        // {
+        //     alpha[i] = 0.4;
+        // }
         Rpp32f alpha[images];
+        Rpp32f beta[images];
         for (i = 0; i < images; i++)
         {
-            alpha[i] = 0.4;
+            alpha[i] = 1.90;
+            beta[i] = 20;
+        }
+        if ((interpolationType != RpptInterpolationType::BILINEAR) && (interpolationType != RpptInterpolationType::NEAREST_NEIGHBOR))
+        {
+            missingFuncFlag = 1;
+            break;
+        }
+
+        Rpp32f angle[images];
+        for (i = 0; i < images; i++)
+        {
+            angle[i] = 45;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -866,7 +1136,25 @@ int main(int argc, char **argv)
         start = clock();
 
         if (ip_bitDepth == 0)
+        {
+            // rppt_brightness_gpu(d_input, srcDescPtr, d_input_second, dstDescPtr, alpha, beta, roiTensorPtrSrc, roiTypeSrc, handle);
+
+            for (i = 0; i < images; i++)
+            {
+                alpha[i] = 0.4;
+            }
+            rppt_rotate_gpu(d_input, srcDescPtr, d_input_second, dstDescPtr, angle, interpolationType, roiTensorPtrSrc, roiTypeSrc, handle);
+            hipDeviceSynchronize();
+
             rppt_blend_gpu(d_input, d_input_second, srcDescPtr, d_output, dstDescPtr, alpha, roiTensorPtrSrc, roiTypeSrc, handle);
+            //  std::cerr<<"\n before srcdesc "<<srcDescPtr->n<<"  "<<srcDescPtr->h<<"  "<<srcDescPtr->w<<" "<<srcDescPtr->c;
+            // std::cerr<<"\n before  dstDescPtr "<<dstDescPtr->n<<"  "<<dstDescPtr->h<<"  "<<dstDescPtr->w<<" "<<dstDescPtr->c;
+            // rppt_rotate_gpu(d_input, srcDescPtr, d_input_second, dstDescPtr, angle, interpolationType, roiTensorPtrSrc, roiTypeSrc, handle);
+            // std::cerr<<"\n after srcdesc "<<srcDescPtr->n<<"  "<<srcDescPtr->h<<"  "<<srcDescPtr->w<<" "<<srcDescPtr->c;
+            // std::cerr<<"\n after dstDescPtr "<<dstDescPtr->n<<"  "<<dstDescPtr->h<<"  "<<dstDescPtr->w<<" "<<dstDescPtr->c;
+            // rppt_blend_gpu(d_input_second, d_input_second, srcDescPtr, d_output, dstDescPtr, alpha, roiTensorPtrSrc, roiTypeSrc, handle);
+
+        }
         else if (ip_bitDepth == 1)
             rppt_blend_gpu(d_inputf16, d_inputf16_second, srcDescPtr, d_outputf16, dstDescPtr, alpha, roiTensorPtrSrc, roiTypeSrc, handle);
         else if (ip_bitDepth == 2)
@@ -892,8 +1180,8 @@ int main(int argc, char **argv)
         Rpp32f contrastCenter[images];
         for (i = 0; i < images; i++)
         {
-            contrastFactor[i] = 2.96;
-            contrastCenter[i] = 128;
+            contrastFactor[i] = 30;
+            contrastCenter[i] = 80;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -1127,7 +1415,7 @@ int main(int argc, char **argv)
         Rpp32f exposureFactor[images];
         for (i = 0; i < images; i++)
         {
-            exposureFactor[i] = 1.4;
+            exposureFactor[i] = 1;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -1208,7 +1496,8 @@ int main(int argc, char **argv)
         roiTypeDst = RpptRoiType::LTRB;*/
 
         start = clock();
-
+        std::cerr<<"\n srcDescPtr "<<srcDescPtr->n <<"  "<<srcDescPtr->c <<"  "<<srcDescPtr->h <<"  "<<srcDescPtr->w <<"  "<<srcDescPtr->numDims <<"  "<<srcDescPtr->offsetInBytes <<"  "<<srcDescPtr->layout<<"  "<<srcDescPtr->strides.nStride<<"  "<<srcDescPtr->strides.nStride<<"  "<<srcDescPtr->strides.cStride<<"  "<<srcDescPtr->strides.hStride<<"  "<<srcDescPtr->strides.wStride<<"\n";
+        std::cerr<<"\n dstDescPtr "<<dstDescPtr->n <<"  "<<dstDescPtr->c <<"  "<<dstDescPtr->h <<"  "<<dstDescPtr->w <<"  "<<dstDescPtr->numDims <<"  "<<dstDescPtr->offsetInBytes <<"  "<<dstDescPtr->layout<<"  "<<dstDescPtr->strides.nStride<<"  "<<dstDescPtr->strides.nStride<<"  "<<dstDescPtr->strides.cStride<<"  "<<dstDescPtr->strides.hStride<<"  "<<dstDescPtr->strides.wStride<<"\n";
         if (ip_bitDepth == 0)
             rppt_flip_gpu(d_input, srcDescPtr, d_output, dstDescPtr, horizontalFlag, verticalFlag, roiTensorPtrSrc, roiTypeSrc, handle);
         else if (ip_bitDepth == 1)
@@ -1234,8 +1523,8 @@ int main(int argc, char **argv)
 
         for (i = 0; i < images; i++)
         {
-            dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = roiTensorPtrSrc[i].xywhROI.roiWidth / 1.1;
-            dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = roiTensorPtrSrc[i].xywhROI.roiHeight / 3;
+            dstImgSizes[i].width = roiTensorPtrDst[i].xywhROI.roiWidth = 533;
+            dstImgSizes[i].height = roiTensorPtrDst[i].xywhROI.roiHeight = 400;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -1294,7 +1583,7 @@ int main(int argc, char **argv)
         Rpp32f angle[images];
         for (i = 0; i < images; i++)
         {
-            angle[i] = 50;
+            angle[i] = 45;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -1353,12 +1642,12 @@ int main(int argc, char **argv)
         Rpp32f *affineTensor = (Rpp32f *)affineTensor_f6;
         for (i = 0; i < images; i++)
         {
-            affineTensor_f6[i].data[0] = 1.23;
+            affineTensor_f6[i].data[0] = 1;
             affineTensor_f6[i].data[1] = 0.5;
-            affineTensor_f6[i].data[2] = 0;
-            affineTensor_f6[i].data[3] = -0.8;
-            affineTensor_f6[i].data[4] = 0.83;
-            affineTensor_f6[i].data[5] = 0;
+            affineTensor_f6[i].data[2] = 1;
+            affineTensor_f6[i].data[3] = 0.5;
+            affineTensor_f6[i].data[4] = 7;
+            affineTensor_f6[i].data[5] = 7;
         }
 
         // Uncomment to run test case with an xywhROI override
@@ -1466,8 +1755,8 @@ int main(int argc, char **argv)
         {
             roiTensorPtrSrc[i].xywhROI.xy.x = 0;
             roiTensorPtrSrc[i].xywhROI.xy.y = 0;
-            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 100;
-            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 180;
+            dstImgSizes[i].width = roiTensorPtrSrc[i].xywhROI.roiWidth = 224;
+            dstImgSizes[i].height = roiTensorPtrSrc[i].xywhROI.roiHeight = 224;
         }
 
         // Uncomment to run test case with an ltrbROI override
@@ -2136,39 +2425,85 @@ int main(int argc, char **argv)
 
     Rpp8u *offsetted_output;
     offsetted_output = output + dstDescPtr->offsetInBytes;
-    for (j = 0; j < dstDescPtr->n; j++)
+    
+    std::cerr<<"\ncheck brfore dumping";
+    // for (j = 0; j < 1/*dstDescPtr->n*/; j++)
+    // {
+    //     int height = dstImgSizes[j].height*dstDescPtr->n;
+    //     int width = dstImgSizes[j].width;
+
+    //     int op_size = height * width * dstDescPtr->c*dstDescPtr->n;
+    //     Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
+    //     Rpp8u *temp_output_row;
+    //     temp_output_row = temp_output;
+    //     Rpp32u elementsInRow = width * dstDescPtr->c;
+    //     Rpp8u *output_row = output + count;
+
+    //     for (int k = 0; k < height; k++)
+    //     {
+    //         memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+    //         temp_output_row += elementsInRow;
+    //         output_row += elementsInRowMax;
+    //     }
+    //     count += dstDescPtr->strides.nStride;
+
+    //     char temp[1000];
+    //     strcpy(temp, dst);
+    //     strcat(temp, "sample.png");
+
+    //     Mat mat_op_image,mat_color;
+    //     mat_op_image = Mat(height, width, CV_8UC1, temp_output);
+    //     cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
+
+    //     imwrite(temp, mat_color);
+
+    //     free(temp_output);
+    // }
+    for (j = 0; j < 1/*dstDescPtr->n*/; j++)
     {
-        int height = dstImgSizes[j].height;
+        int height = dstImgSizes[j].height*dstDescPtr->n;
         int width = dstImgSizes[j].width;
 
-        int op_size = height * width * ip_channel;
+        int op_size = height * width * dstDescPtr->c*dstDescPtr->n;
         Rpp8u *temp_output = (Rpp8u *)calloc(op_size, sizeof(Rpp8u));
         Rpp8u *temp_output_row;
         temp_output_row = temp_output;
-        Rpp32u elementsInRow = width * ip_channel;
-        Rpp8u *output_row = offsetted_output + count;
+        Rpp32u elementsInRow = width * dstDescPtr->c;
+        Rpp8u *output_row = output + count;
 
-        for (int k = 0; k < height; k++)
+        for (int k = 0; k < height/2; k++)
         {
             memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
             temp_output_row += elementsInRow;
-            output_row += elementsInRowMax;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
         }
+        // count += maxHeight * maxWidth * ip_channel ;
         count += dstDescPtr->strides.nStride;
+
+        output_row = output + count;
+        // count += height * width * ip_channel*2;
+        // output_row = output + count;
+        for (int k = 0; k < height/2; k++)
+        {
+            memcpy(temp_output_row, (output_row), elementsInRow * sizeof (Rpp8u));
+            temp_output_row += elementsInRow;
+            output_row += elementsInRowMax;  
+            // std:cerr<<"\nelementsInRowMax  "<<elementsInRowMax;
+        }
 
         char temp[1000];
         strcpy(temp, dst);
-        strcat(temp, imageNames[j]);
+        strcat(temp, "sample.png");
 
-        Mat mat_op_image;
+        Mat mat_op_image,mat_color;
         mat_op_image = Mat(height, width, CV_8UC1, temp_output);
-        imwrite(temp, mat_op_image);
+        cv::cvtColor(mat_op_image, mat_color, COLOR_RGB2BGR);
+
+        imwrite(temp, mat_color);
 
         free(temp_output);
     }
-
-    // Free memory
-
     hipHostFree(roiTensorPtrSrc);
     hipHostFree(roiTensorPtrDst);
     hipHostFree(srcImgSizes);

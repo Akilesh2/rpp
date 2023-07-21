@@ -451,7 +451,7 @@ inline void read_image_batch_turbojpeg(Rpp8u *input, RpptDescPtr descPtr, string
         {
             elementsInRow = width * descPtr->c;
             rgbBuf= (Rpp8u*)malloc(width * height * 3);
-            if(tjDecompress2(m_jpegDecompressor, jpegBuf, jpegSize, rgbBuf, width, width * 3, height, TJPF_RGB, TJFLAG_FASTDCT) != 0)
+            if(tjDecompress2(m_jpegDecompressor, jpegBuf, jpegSize, rgbBuf, width, width * 3, height, TJPF_RGB, TJFLAG_ACCURATEDCT) != 0)
                 std::cerr<<"\n Jpeg image decode failed ";
         }
         else
@@ -485,9 +485,9 @@ inline void write_image_batch_opencv(string outputFolder, Rpp8u *output, RpptDes
 
     Rpp32u elementsInRowMax = dstDescPtr->w * dstDescPtr->c;
     Rpp8u *offsettedOutput = output + dstDescPtr->offsetInBytes;
-    for (int j = 0; j < dstDescPtr->n; j++)
+    for (int j = 0; j < 1; j++)
     {
-        Rpp32u height = dstImgSizes[j].height;
+        Rpp32u height = dstImgSizes[j].height * dstDescPtr->n;
         Rpp32u width = dstImgSizes[j].width;
         Rpp32u elementsInRow = width * dstDescPtr->c;
         Rpp32u outputSize = height * width * dstDescPtr->c;

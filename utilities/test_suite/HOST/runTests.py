@@ -31,8 +31,8 @@ timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 os.environ["TIMESTAMP"] = timestamp
 
 cwd = os.getcwd()
-inFilePath1 = os.path.join(os.path.dirname(cwd), 'TEST_IMAGES', 'three_images_mixed_src1')
-inFilePath2 = os.path.join(os.path.dirname(cwd), 'TEST_IMAGES', 'three_images_mixed_src2')
+inFilePath1 ="/media/trial/rpp_golden/images/"
+inFilePath2 ="/media/trial/rpp_golden/images/"
 
 def validate_path(input_path):
     if not os.path.exists(input_path):
